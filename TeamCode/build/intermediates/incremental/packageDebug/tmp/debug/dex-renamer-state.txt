@@ -1,14 +1,14 @@
-#Wed Nov 20 18:18:16 CST 2024
-base.0=/Users/bowen./Downloads/RoadRunnerQuickStart/TeamCode/build/intermediates/dex/debug/mergeExtDexDebug/classes.dex
-base.1=/Users/bowen./Downloads/RoadRunnerQuickStart/TeamCode/build/intermediates/dex/debug/mergeLibDexDebug/10/classes.dex
-base.2=/Users/bowen./Downloads/RoadRunnerQuickStart/TeamCode/build/intermediates/dex/debug/mergeLibDexDebug/11/classes.dex
-base.3=/Users/bowen./Downloads/RoadRunnerQuickStart/TeamCode/build/intermediates/dex/debug/mergeLibDexDebug/8/classes.dex
-base.4=/Users/bowen./Downloads/RoadRunnerQuickStart/TeamCode/build/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
-base.5=/Users/bowen./Downloads/RoadRunnerQuickStart/TeamCode/build/intermediates/dex/debug/mergeProjectDexDebug/11/classes.dex
-base.6=/Users/bowen./Downloads/RoadRunnerQuickStart/TeamCode/build/intermediates/dex/debug/mergeProjectDexDebug/15/classes.dex
-base.7=/Users/bowen./Downloads/RoadRunnerQuickStart/TeamCode/build/intermediates/dex/debug/mergeProjectDexDebug/3/classes.dex
-base.8=/Users/bowen./Downloads/RoadRunnerQuickStart/TeamCode/build/intermediates/dex/debug/mergeExtDexDebug/classes2.dex
-base.9=/Users/bowen./Downloads/RoadRunnerQuickStart/TeamCode/build/intermediates/dex/debug/mergeExtDexDebug/classes3.dex
+#Tue Dec 03 16:55:03 CST 2024
+base.0=/Users/bowen./Downloads/Snakebyte2024-2025WaLe2/TeamCode/build/intermediates/dex/debug/mergeExtDexDebug/classes.dex
+base.1=/Users/bowen./Downloads/Snakebyte2024-2025WaLe2/TeamCode/build/intermediates/dex/debug/mergeLibDexDebug/10/classes.dex
+base.2=/Users/bowen./Downloads/Snakebyte2024-2025WaLe2/TeamCode/build/intermediates/dex/debug/mergeLibDexDebug/11/classes.dex
+base.3=/Users/bowen./Downloads/Snakebyte2024-2025WaLe2/TeamCode/build/intermediates/dex/debug/mergeLibDexDebug/8/classes.dex
+base.4=/Users/bowen./Downloads/Snakebyte2024-2025WaLe2/TeamCode/build/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
+base.5=/Users/bowen./Downloads/Snakebyte2024-2025WaLe2/TeamCode/build/intermediates/dex/debug/mergeProjectDexDebug/11/classes.dex
+base.6=/Users/bowen./Downloads/Snakebyte2024-2025WaLe2/TeamCode/build/intermediates/dex/debug/mergeProjectDexDebug/15/classes.dex
+base.7=/Users/bowen./Downloads/Snakebyte2024-2025WaLe2/TeamCode/build/intermediates/dex/debug/mergeProjectDexDebug/3/classes.dex
+base.8=/Users/bowen./Downloads/Snakebyte2024-2025WaLe2/TeamCode/build/intermediates/dex/debug/mergeExtDexDebug/classes2.dex
+base.9=/Users/bowen./Downloads/Snakebyte2024-2025WaLe2/TeamCode/build/intermediates/dex/debug/mergeExtDexDebug/classes3.dex
 path.0=classes.dex
 path.1=10/classes.dex
 path.2=11/classes.dex
