@@ -1,4 +1,0 @@
-org.firstinspires.ftc.teamcode.test.TeamCode-androidTest-0 /Users/bowen./Downloads/Snakebyte2024-2025WaLe2/TeamCode/build/generated/res/resValues/androidTest/debug
-org.firstinspires.ftc.teamcode.test.TeamCode-mergeDebugAndroidTestResources-1 /Users/bowen./Downloads/Snakebyte2024-2025WaLe2/TeamCode/build/intermediates/incremental/debugAndroidTest/mergeDebugAndroidTestResources/merged.dir
-org.firstinspires.ftc.teamcode.test.TeamCode-mergeDebugAndroidTestResources-2 /Users/bowen./Downloads/Snakebyte2024-2025WaLe2/TeamCode/build/intermediates/incremental/debugAndroidTest/mergeDebugAndroidTestResources/stripped.dir
-org.firstinspires.ftc.teamcode.test.TeamCode-debugAndroidTest-3 /Users/bowen./Downloads/Snakebyte2024-2025WaLe2/TeamCode/build/intermediates/merged_res/debugAndroidTest/mergeDebugAndroidTestResources

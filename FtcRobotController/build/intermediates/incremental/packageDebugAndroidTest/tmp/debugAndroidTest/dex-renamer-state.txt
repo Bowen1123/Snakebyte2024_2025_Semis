@@ -1,11 +1,11 @@
-#Fri Dec 06 16:51:33 CST 2024
-base.0=/Users/bowen./Downloads/Snakebyte2024-2025WaLe2/FtcRobotController/build/intermediates/dex/debugAndroidTest/mergeExtDexDebugAndroidTest/classes.dex
-base.1=/Users/bowen./Downloads/Snakebyte2024-2025WaLe2/FtcRobotController/build/intermediates/dex/debugAndroidTest/mergeLibDexDebugAndroidTest/10/classes.dex
-base.2=/Users/bowen./Downloads/Snakebyte2024-2025WaLe2/FtcRobotController/build/intermediates/dex/debugAndroidTest/mergeLibDexDebugAndroidTest/11/classes.dex
-base.3=/Users/bowen./Downloads/Snakebyte2024-2025WaLe2/FtcRobotController/build/intermediates/dex/debugAndroidTest/mergeLibDexDebugAndroidTest/8/classes.dex
-base.4=/Users/bowen./Downloads/Snakebyte2024-2025WaLe2/FtcRobotController/build/intermediates/dex/debugAndroidTest/mergeProjectDexDebugAndroidTest/0/classes.dex
-base.5=/Users/bowen./Downloads/Snakebyte2024-2025WaLe2/FtcRobotController/build/intermediates/dex/debugAndroidTest/mergeProjectDexDebugAndroidTest/1/classes.dex
-base.6=/Users/bowen./Downloads/Snakebyte2024-2025WaLe2/FtcRobotController/build/intermediates/dex/debugAndroidTest/mergeExtDexDebugAndroidTest/classes2.dex
+#Tue Jan 14 16:31:31 CST 2025
+base.0=/Users/bowen./Downloads/Snakebyte2024-2025WaLe2/ftcrobotcontroller/build/intermediates/dex/debugAndroidTest/mergeExtDexDebugAndroidTest/classes.dex
+base.1=/Users/bowen./Downloads/Snakebyte2024-2025WaLe2/ftcrobotcontroller/build/intermediates/dex/debugAndroidTest/mergeLibDexDebugAndroidTest/10/classes.dex
+base.2=/Users/bowen./Downloads/Snakebyte2024-2025WaLe2/ftcrobotcontroller/build/intermediates/dex/debugAndroidTest/mergeLibDexDebugAndroidTest/11/classes.dex
+base.3=/Users/bowen./Downloads/Snakebyte2024-2025WaLe2/ftcrobotcontroller/build/intermediates/dex/debugAndroidTest/mergeLibDexDebugAndroidTest/8/classes.dex
+base.4=/Users/bowen./Downloads/Snakebyte2024-2025WaLe2/ftcrobotcontroller/build/intermediates/dex/debugAndroidTest/mergeProjectDexDebugAndroidTest/0/classes.dex
+base.5=/Users/bowen./Downloads/Snakebyte2024-2025WaLe2/ftcrobotcontroller/build/intermediates/dex/debugAndroidTest/mergeProjectDexDebugAndroidTest/1/classes.dex
+base.6=/Users/bowen./Downloads/Snakebyte2024-2025WaLe2/ftcrobotcontroller/build/intermediates/dex/debugAndroidTest/mergeExtDexDebugAndroidTest/classes2.dex
 path.0=classes.dex
 path.1=10/classes.dex
 path.2=11/classes.dex

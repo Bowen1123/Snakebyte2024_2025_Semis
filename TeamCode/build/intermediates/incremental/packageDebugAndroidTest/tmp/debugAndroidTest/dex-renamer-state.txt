@@ -1,4 +1,0 @@
-#Fri Dec 06 16:51:31 CST 2024
-base.0=/Users/bowen./Downloads/Snakebyte2024-2025WaLe2/TeamCode/build/intermediates/dex/debugAndroidTest/mergeProjectDexDebugAndroidTest/0/classes.dex
-path.0=0/classes.dex
-renamed.0=classes.dex

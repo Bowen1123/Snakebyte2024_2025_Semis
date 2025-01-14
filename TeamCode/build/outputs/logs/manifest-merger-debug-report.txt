@@ -7,7 +7,7 @@ INJECTED from /Users/bowen./Downloads/Snakebyte2024-2025WaLe2/TeamCode/src/main/
 MERGED from [:FtcRobotController] /Users/bowen./Downloads/Snakebyte2024-2025WaLe2/FtcRobotController/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-78:12
 MERGED from [org.firstinspires.ftc:OnBotJava:10.1.1] /Users/bowen./.gradle/caches/8.9/transforms/2942815857bcde462228621fc8c275e5/transformed/OnBotJava-10.1.1/AndroidManifest.xml:34:1-41:12
 MERGED from [org.firstinspires.ftc:Blocks:10.1.1] /Users/bowen./.gradle/caches/8.9/transforms/5fdf550c57acd8b76882038719059e36/transformed/Blocks-10.1.1/AndroidManifest.xml:2:1-24:12
-MERGED from [com.acmerobotics.roadrunner:ftc:0.1.14] /Users/bowen./.gradle/caches/8.9/transforms/c2d2d065004dddacfabfdf3aeea8f206/transformed/ftc-0.1.14/AndroidManifest.xml:3:1-12:12
+MERGED from [com.acmerobotics.roadrunner:ftc:0.1.15] /Users/bowen./.gradle/caches/8.9/transforms/30766eee2356e3b1c22689b49e6df67c/transformed/ftc-0.1.15/AndroidManifest.xml:3:1-12:12
 MERGED from [com.acmerobotics.dashboard:dashboard:0.4.16] /Users/bowen./.gradle/caches/8.9/transforms/2a8b801ac56271921d29d61cfac426fb/transformed/dashboard-0.4.16/AndroidManifest.xml:2:1-9:12
 MERGED from [org.firstinspires.ftc:FtcCommon:10.1.1] /Users/bowen./.gradle/caches/8.9/transforms/fc6c3aa5ef79cd253593b19fa5a60f6c/transformed/FtcCommon-10.1.1/AndroidManifest.xml:3:1-178:12
 MERGED from [org.firstinspires.ftc:Inspection:10.1.1] /Users/bowen./.gradle/caches/8.9/transforms/8c3400718812f579e5022dd2ab4e4d52/transformed/Inspection-10.1.1/AndroidManifest.xml:2:1-30:12
@@ -55,8 +55,8 @@ MERGED from [:FtcRobotController] /Users/bowen./Downloads/Snakebyte2024-2025WaLe
 MERGED from [:FtcRobotController] /Users/bowen./Downloads/Snakebyte2024-2025WaLe2/FtcRobotController/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:12:5-76:19
 MERGED from [org.firstinspires.ftc:Blocks:10.1.1] /Users/bowen./.gradle/caches/8.9/transforms/5fdf550c57acd8b76882038719059e36/transformed/Blocks-10.1.1/AndroidManifest.xml:16:5-22:19
 MERGED from [org.firstinspires.ftc:Blocks:10.1.1] /Users/bowen./.gradle/caches/8.9/transforms/5fdf550c57acd8b76882038719059e36/transformed/Blocks-10.1.1/AndroidManifest.xml:16:5-22:19
-MERGED from [com.acmerobotics.roadrunner:ftc:0.1.14] /Users/bowen./.gradle/caches/8.9/transforms/c2d2d065004dddacfabfdf3aeea8f206/transformed/ftc-0.1.14/AndroidManifest.xml:10:5-20
-MERGED from [com.acmerobotics.roadrunner:ftc:0.1.14] /Users/bowen./.gradle/caches/8.9/transforms/c2d2d065004dddacfabfdf3aeea8f206/transformed/ftc-0.1.14/AndroidManifest.xml:10:5-20
+MERGED from [com.acmerobotics.roadrunner:ftc:0.1.15] /Users/bowen./.gradle/caches/8.9/transforms/30766eee2356e3b1c22689b49e6df67c/transformed/ftc-0.1.15/AndroidManifest.xml:10:5-20
+MERGED from [com.acmerobotics.roadrunner:ftc:0.1.15] /Users/bowen./.gradle/caches/8.9/transforms/30766eee2356e3b1c22689b49e6df67c/transformed/ftc-0.1.15/AndroidManifest.xml:10:5-20
 MERGED from [org.firstinspires.ftc:FtcCommon:10.1.1] /Users/bowen./.gradle/caches/8.9/transforms/fc6c3aa5ef79cd253593b19fa5a60f6c/transformed/FtcCommon-10.1.1/AndroidManifest.xml:21:5-176:19
 MERGED from [org.firstinspires.ftc:FtcCommon:10.1.1] /Users/bowen./.gradle/caches/8.9/transforms/fc6c3aa5ef79cd253593b19fa5a60f6c/transformed/FtcCommon-10.1.1/AndroidManifest.xml:21:5-176:19
 MERGED from [org.firstinspires.ftc:Inspection:10.1.1] /Users/bowen./.gradle/caches/8.9/transforms/8c3400718812f579e5022dd2ab4e4d52/transformed/Inspection-10.1.1/AndroidManifest.xml:17:5-28:19
@@ -99,8 +99,8 @@ MERGED from [org.firstinspires.ftc:OnBotJava:10.1.1] /Users/bowen./.gradle/cache
 MERGED from [org.firstinspires.ftc:OnBotJava:10.1.1] /Users/bowen./.gradle/caches/8.9/transforms/2942815857bcde462228621fc8c275e5/transformed/OnBotJava-10.1.1/AndroidManifest.xml:39:5-44
 MERGED from [org.firstinspires.ftc:Blocks:10.1.1] /Users/bowen./.gradle/caches/8.9/transforms/5fdf550c57acd8b76882038719059e36/transformed/Blocks-10.1.1/AndroidManifest.xml:7:5-44
 MERGED from [org.firstinspires.ftc:Blocks:10.1.1] /Users/bowen./.gradle/caches/8.9/transforms/5fdf550c57acd8b76882038719059e36/transformed/Blocks-10.1.1/AndroidManifest.xml:7:5-44
-MERGED from [com.acmerobotics.roadrunner:ftc:0.1.14] /Users/bowen./.gradle/caches/8.9/transforms/c2d2d065004dddacfabfdf3aeea8f206/transformed/ftc-0.1.14/AndroidManifest.xml:6:5-8:41
-MERGED from [com.acmerobotics.roadrunner:ftc:0.1.14] /Users/bowen./.gradle/caches/8.9/transforms/c2d2d065004dddacfabfdf3aeea8f206/transformed/ftc-0.1.14/AndroidManifest.xml:6:5-8:41
+MERGED from [com.acmerobotics.roadrunner:ftc:0.1.15] /Users/bowen./.gradle/caches/8.9/transforms/30766eee2356e3b1c22689b49e6df67c/transformed/ftc-0.1.15/AndroidManifest.xml:6:5-8:41
+MERGED from [com.acmerobotics.roadrunner:ftc:0.1.15] /Users/bowen./.gradle/caches/8.9/transforms/30766eee2356e3b1c22689b49e6df67c/transformed/ftc-0.1.15/AndroidManifest.xml:6:5-8:41
 MERGED from [com.acmerobotics.dashboard:dashboard:0.4.16] /Users/bowen./.gradle/caches/8.9/transforms/2a8b801ac56271921d29d61cfac426fb/transformed/dashboard-0.4.16/AndroidManifest.xml:5:5-7:41
 MERGED from [com.acmerobotics.dashboard:dashboard:0.4.16] /Users/bowen./.gradle/caches/8.9/transforms/2a8b801ac56271921d29d61cfac426fb/transformed/dashboard-0.4.16/AndroidManifest.xml:5:5-7:41
 MERGED from [org.firstinspires.ftc:FtcCommon:10.1.1] /Users/bowen./.gradle/caches/8.9/transforms/fc6c3aa5ef79cd253593b19fa5a60f6c/transformed/FtcCommon-10.1.1/AndroidManifest.xml:8:5-44
