@@ -5,10 +5,13 @@ import static org.firstinspires.ftc.teamcode.MecanumDrive.PARAMS;
 import com.acmerobotics.roadrunner.ftc.LazyImu;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AngularVelocity;
@@ -16,23 +19,33 @@ import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 
 
 @TeleOp
-public class Teleop extends LinearOpMode {
+public class Teleop extends OpMode {
     IMU imu;
     boolean stopped;
+
+    DcMotor leftFront, leftBack, rightFront, rightBack, lift, horizontalSlide;
+    CRServo star;
+    Servo outake, intake;
 
     double turn, strafe,linear, denominator, targetFacing;
     RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.UP;
     RevHubOrientationOnRobot.UsbFacingDirection  usbDirection  = RevHubOrientationOnRobot.UsbFacingDirection.FORWARD;
 
 
+
+
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void init() {
         // Declare our motors
         // Make sure your ID's match your configuration
-        DcMotor frontLeftMotor = hardwareMap.dcMotor.get("leftFront");
-        DcMotor backLeftMotor = hardwareMap.dcMotor.get("leftBack");
-        DcMotor frontRightMotor = hardwareMap.dcMotor.get("rightFront");
-        DcMotor backRightMotor = hardwareMap.dcMotor.get("rightBack");
+        leftFront = hardwareMap.dcMotor.get("leftFront");
+        leftBack = hardwareMap.dcMotor.get("leftBack");
+        rightFront = hardwareMap.dcMotor.get("rightFront");
+        rightBack = hardwareMap.dcMotor.get("rightBack");
+        lift = hardwareMap.dcMotor.get("lift");
+        horizontalSlide = hardwareMap.dcMotor.get("horizontalSlide");
+        leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
         // IMU initialization
@@ -43,79 +56,84 @@ public class Teleop extends LinearOpMode {
         imu.resetYaw();
         stopped = true;
 
-        // Reverse the right side motors. This may be wrong for your setup.
-        // If your robot moves backwards when commanded to go forwards,
-        // reverse the left side instead.
-        // See the note about this earlier on this page.
-        frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        waitForStart();
-
-        if (isStopRequested()) return;
-
-        while (opModeIsActive()) {
-            YawPitchRollAngles facing = imu.getRobotYawPitchRollAngles();
-
-            if (gamepad1.right_bumper){
-                imuUpdate();
-                telemetry.addData("TargetFacing: ", targetFacing);
-
-                telemetry.addData("Stopped: ", stopped);
-                telemetry.update();
-            }
-            if (gamepad1.left_bumper){
-                imu.resetYaw();
-                targetFacing = 0;
-            }
-
-
-            double facingPower = Math.abs(facing.getYaw()) / 30;
-            // Left gives positive heading
-            if (stopped && facing.getYaw() > 3){
-                frontLeftMotor.setPower(facingPower);
-                backLeftMotor.setPower(facingPower);
-                frontRightMotor.setPower(-facingPower);
-                backRightMotor.setPower(-facingPower);
-            }
-            if (stopped && facing.getYaw() < -3){
-                frontLeftMotor.setPower(-facingPower);
-                backLeftMotor.setPower(-facingPower);
-                frontRightMotor.setPower(facingPower);
-                backRightMotor.setPower(facingPower);
-            }
-
-
-
-            /*strafe = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
-            linear = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
-            turn = gamepad1.right_stick_x;
-            denominator = Math.max(Math.abs(strafe) + Math.abs(linear), 1);
-            double frontLeftPower = (strafe + linear) / denominator;
-            double backLeftPower = (strafe - linear) / denominator;
-            double frontRightPower = (strafe - linear) / denominator;
-            double backRightPower = (strafe + linear) / denominator;*/
-
-            strafe = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
-            linear = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
-            turn = gamepad1.right_stick_x;
-            denominator = Math.max(Math.abs(strafe) + Math.abs(linear) + Math.abs(turn), 1);
-            if (Math.max(Math.abs(strafe) + Math.abs(linear), Math.abs(turn)) > 0.1){
-
-                imu.resetYaw();
-            }
-            stopped = true;
-
-            double frontLeftPower = (strafe + linear + turn) / denominator;
-            double backLeftPower = (strafe - linear + turn) / denominator;
-            double frontRightPower = (strafe - linear - turn) / denominator;
-            double backRightPower = (strafe + linear - turn) / denominator;
-            frontLeftMotor.setPower(frontLeftPower);
-            backLeftMotor.setPower(backLeftPower);
-            frontRightMotor.setPower(frontRightPower);
-            backRightMotor.setPower(backRightPower);
-        }
     }
+
+    @Override
+    public void loop() {
+        YawPitchRollAngles facing = imu.getRobotYawPitchRollAngles();
+
+        /*if (gamepad1.a){
+            outake.setPosition(1);
+        }
+        if (gamepad1.b){
+            outake.setPosition(0);
+        }
+        if(gamepad1.x){
+            outake.setPosition(.5);
+        }*/
+
+        if (Math.abs(gamepad2.left_stick_y) > 0.1){
+            lift.setPower(gamepad2.left_stick_y);
+        }
+        else {
+            lift.setPower(0);
+        }
+
+        if (Math.abs(gamepad2.right_stick_x) > 0.1){
+            horizontalSlide.setPower(gamepad2.left_stick_x);
+        }
+        else {
+            horizontalSlide.setPower(0);
+        }
+
+
+        if (gamepad1.right_bumper){
+            imuUpdate();
+            telemetry.addData("TargetFacing: ", targetFacing);
+
+            telemetry.addData("Stopped: ", stopped);
+            telemetry.update();
+        }
+        if (gamepad1.left_bumper){
+            imu.resetYaw();
+            targetFacing = 0;
+        }
+
+        /*double facingPower = Math.abs(facing.getYaw()) / 30;
+        // Left gives positive heading
+        if (stopped && facing.getYaw() > 3){
+            leftFront.setPower(facingPower);
+            leftBack.setPower(facingPower);
+            rightFront.setPower(-facingPower);
+            rightBack.setPower(-facingPower);
+        }
+        if (stopped && facing.getYaw() < -3){
+            leftFront.setPower(-facingPower);
+            leftBack.setPower(-facingPower);
+            rightFront.setPower(facingPower);
+            rightBack.setPower(facingPower);
+        }*/
+        strafe = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
+        linear = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
+        turn = gamepad1.right_stick_x;
+        denominator = Math.max(Math.abs(strafe) + Math.abs(linear) + Math.abs(turn), 1);
+        if (Math.max(Math.abs(strafe) + Math.abs(linear), Math.abs(turn)) > 0.1){
+
+            imu.resetYaw();
+        }
+        stopped = true;
+
+        double frontLeftPower = (strafe + linear + turn) / denominator;
+        double backLeftPower = (strafe - linear + turn) / denominator;
+        double frontRightPower = (strafe - linear - turn) / denominator;
+        double backRightPower = (strafe + linear - turn) / denominator;
+        leftFront.setPower(frontLeftPower);
+        leftBack.setPower(backLeftPower);
+        rightFront.setPower(frontRightPower);
+        rightBack.setPower(backRightPower);
+    }
+
 
     public void imuUpdate(){
         telemetry.addData("Hub orientation", "Logo=%s   USB=%s\n ", logoDirection, usbDirection);

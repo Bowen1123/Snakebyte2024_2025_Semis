@@ -11,7 +11,10 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/FtcRobotController" />
+            <option value="$PROJECT_DIR$/MeepMeepTesting" />
             <option value="$PROJECT_DIR$/TeamCode" />
+            <option value="$PROJECT_DIR$/ftcrobotcontroller" />
+            <option value="$PROJECT_DIR$/ftcrobotcontroller/lib" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />
