@@ -20,6 +20,7 @@ public class tele extends LinearOpMode {
     private Servo wrist, bucket;
     private CRServo intake;
     private boolean init;
+    private int LIFT_TARGET_POSITION = 0;
     @Override
     public void runOpMode() throws InterruptedException {
         leftFront = hardwareMap.get(DcMotor.class, "leftFront");
@@ -34,10 +35,13 @@ public class tele extends LinearOpMode {
 
         lift = hardwareMap.get(DcMotorEx.class, "lift");
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        //lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        //lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        Lift testingLift = new Lift(hardwareMap);
+
         //intakeM = hardwareMap.get(DcMotor.class, "horizonalSlide");
 
         wrist = hardwareMap.get(Servo.class, "wrist");
@@ -65,7 +69,6 @@ public class tele extends LinearOpMode {
                  wrist.setPosition(0.32);
                  init = true;
             }
-            lift.setPower(gamepad2.right_stick_y);
             if(gamepad2.dpad_right){
                 leftFront.setPower(1);
             }
@@ -81,19 +84,39 @@ public class tele extends LinearOpMode {
             if (gamepad2.y){
                 wrist.setPosition(0.7);
             }
-            if(gamepad2.left_bumper){
+
+            if (gamepad2.left_bumper){
+                testingLift.bucketUp();
+            }
+
+            /*if(gamepad2.left_bumper){
                 intake.setPower(1);
             } else if (gamepad2.right_bumper){
                 intake.setPower(-1);
             }
             else {
                 intake.setPower(0);
+            }*/
+
+            LIFT_TARGET_POSITION += gamepad2.right_stick_y * 10;
+            lift.setTargetPosition(LIFT_TARGET_POSITION);
+            if (LIFT_TARGET_POSITION < 0){
+                LIFT_TARGET_POSITION = 1;
+            }
+            if (LIFT_TARGET_POSITION > 6000){
+                LIFT_TARGET_POSITION = 6000;
+            }
+            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            if (LIFT_TARGET_POSITION == 0){
+                lift.setPower(LIFT_TARGET_POSITION/ (Math.abs(LIFT_TARGET_POSITION) + 1));
+            }
+            else {
+                lift.setPower(LIFT_TARGET_POSITION/Math.abs(LIFT_TARGET_POSITION));
             }
 
-            /*if (gamepad2.right_bumper){
 
-            }*/
             telemetry.addData("Lift Position:", lift.getCurrentPosition());
+            telemetry.addData("LIFT_TARGET_POSITION:", LIFT_TARGET_POSITION);
             telemetry.update();
         }
 
@@ -102,6 +125,8 @@ public class tele extends LinearOpMode {
     public void liftUp(){
         lift.setTargetPosition(8250);
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        telemetry.addLine();
+        telemetry.addData("Lift Status:", 1);
         lift.setPower(-.8);
     }
     public void liftDown(){

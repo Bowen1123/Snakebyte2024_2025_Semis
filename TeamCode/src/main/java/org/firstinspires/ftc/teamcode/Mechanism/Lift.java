@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.Mechanism;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
+
 import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
@@ -12,7 +14,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class Lift {
     private DcMotor slides;
-    private Servo bucket;
+    public Servo bucket;
     private boolean init, eaten, slideExtended;
 
     public Lift(HardwareMap hardwareMap){
@@ -31,8 +33,7 @@ public class Lift {
 
     public Action extend(){ return new Lift.Extend(); }
     public Action retract(){ return new Lift.Retract(); }
-    public void bucketUp(){
-    }
+    public Action bucketUp(){ return new BucketUp(); }
     public Action bucketDown(){ return new Lift.BucketDown(); }
     public class Extend implements Action{
 
@@ -80,17 +81,16 @@ public class Lift {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            telemetryPacket.addLine(String.format("CurrentPos%.2f", bucket.getPosition()));
-            double targetPos = .95;
+            /*double targetPos = 1;
             double currentPos = bucket.getPosition();
-            while (currentPos < targetPos){
-                bucket.setPosition(targetPos - (targetPos - currentPos) / 2);
-                currentPos = bucket.getPosition();
-                if (targetPos - currentPos <= 0.05){
-                    bucket.setPosition(targetPos);
-                }
-            }
-            return true;
+            int times = (int)((targetPos - currentPos) / .25);
+
+            for (int i = 0; i < times; i++){
+                bucket.setPosition(currentPos + (times * i));
+            }*/
+            bucket.setPosition(1);
+
+            return false;
         }
     }
     public class BucketDown implements Action{

@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -31,68 +32,37 @@ public class Testing extends LinearOpMode {
             lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
             maxHeight = 0;
 
             Lift liftClass = new Lift(hardwareMap);
-            liftClass.bucketDown();
-
             //1450
             waitForStart();
             while (opModeIsActive()){
                 TelemetryPacket packet = new TelemetryPacket();
 
-
-
-                if (lift.getCurrentPosition() > maxHeight){
-                    maxHeight = lift.getCurrentPosition();
-                }
-
-                if (Math.abs(gamepad1.left_stick_y) > 0.1){
-                    lift.setPower(gamepad1.left_stick_y);
-                } else if (gamepad1.x){
-                    lift.setTargetPosition(maxHeight);
-                    lift.setPower(1);
-                } else {
-                    lift.setPower(0);
-                }
-
-                if(gamepad1.right_bumper) {
-                    lift.setMode(DcMotor.RunMode.RESET_ENCODERS);
-                }
                 if(gamepad1.a){
                     liftClass.bucketUp();
-                    Actions.runBlocking(liftClass.bucketDown());
+                    Actions.runBlocking(liftClass.bucketUp());
                     telemetry.addData("done", 0);
                     telemetry.update();
                 }
 
 
-
-                if (gamepad1.right_bumper){
-                    actions.clear();
-                }
-
-            /* List<Action> newActions = new ArrayList<>();
-            for (Action action : actions) {
-                action.preview(packet.fieldOverlay());
-                if (action.run(packet)) {
-                    newActions.add(action);
-                }
+            if (gamepad2.left_bumper){
+                actions.add(liftClass.bucketUp());
             }
-            actions = newActions;
+            if (gamepad2.right_bumper && actions.size() > 0){
+                telemetry.addData("Running", 1);
+                Actions.runBlocking(actions.get(0));
+                actions.remove(0);
+            }
+            if (gamepad2.a){
+                Actions.runBlocking(new InstantAction(() -> liftClass.bucket.setPosition(1)));
+            }
 
-            dash.sendTelemetryPacket(packet);
-            /*telemetry.addData("Lift Position: ", lift.getCurrentPosition());
+            telemetry.addData("Actions Size", actions.size());
             telemetry.update();
-
-            lift.setTargetPosition(1450);
-            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setPower(.5);
-            if (lift.getCurrentPosition() == 1000){
-                telemetry.addData("Counts: ", 1000);
-            }*/
-                telemetry.addData("Counts", lift.getCurrentPosition());
-                telemetry.update();
         }
     }
 
