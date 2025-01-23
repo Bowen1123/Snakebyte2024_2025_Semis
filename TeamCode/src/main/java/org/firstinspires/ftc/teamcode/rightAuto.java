@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -8,6 +10,8 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.teamcode.Mechanism.Lift;
 
 @Autonomous
 public class rightAuto extends LinearOpMode {
@@ -37,11 +41,38 @@ public class rightAuto extends LinearOpMode {
 
         //intakeM = hardwareMap.get(DcMotor.class, "horizonalSlide");
 
+
+        Lift liftClass = new Lift(hardwareMap);
+
         wrist = hardwareMap.get(Servo.class, "wrist");
         bucket = hardwareMap.get(Servo.class, "bucket");
         waitForStart();
         while (opModeIsActive()){
-            ElapsedTime elapsedTime = new ElapsedTime();
+            /*ElapsedTime timer = new ElapsedTime();
+            timer.startTime();
+            timer.reset();
+
+            if (timer.seconds() == 2){
+                bucket.setPosition(1);
+                telemetry.addData("Bucket Position: ", bucket.getPosition());
+                telemetry.update();
+            }
+
+            if (timer.seconds() == 6){
+                bucket.setPosition(.2);
+                telemetry.addData("Bucket Position: ", bucket.getPosition());
+                telemetry.update();
+            }
+
+            if (timer.seconds() == 10){
+                Actions.runBlocking(liftClass.bucketUp());
+                telemetry.addData("Bucket Position: ", bucket.getPosition());
+                telemetry.update();
+            }*/
+            Actions.runBlocking( new SequentialAction(liftClass.bucketUp()));
+
+
+            /*ElapsedTime elapsedTime = new ElapsedTime();
             while (elapsedTime.seconds() < 2.5){
                 leftBack.setPower(-0.5);
                 rightBack.setPower(0.5);
@@ -51,8 +82,7 @@ public class rightAuto extends LinearOpMode {
             leftBack.setPower(0);
             rightBack.setPower(0);
             rightFront.setPower(0);
-            leftFront.setPower(0);
-
+            leftFront.setPower(0);*/
         }
     }
 }

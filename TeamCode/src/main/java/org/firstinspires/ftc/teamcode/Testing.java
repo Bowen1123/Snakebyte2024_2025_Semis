@@ -4,6 +4,9 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.InstantAction;
+import com.acmerobotics.roadrunner.ParallelAction;
+import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -39,26 +42,20 @@ public class Testing extends LinearOpMode {
             //1450
             waitForStart();
             while (opModeIsActive()){
-                TelemetryPacket packet = new TelemetryPacket();
-
-                if(gamepad1.a){
-                    liftClass.bucketUp();
-                    Actions.runBlocking(liftClass.bucketUp());
-                    telemetry.addData("done", 0);
-                    telemetry.update();
-                }
-
 
             if (gamepad2.left_bumper){
                 actions.add(liftClass.bucketUp());
             }
-            if (gamepad2.right_bumper && actions.size() > 0){
-                telemetry.addData("Running", 1);
-                Actions.runBlocking(actions.get(0));
-                actions.remove(0);
+
+            if (gamepad2.right_bumper){
+                Actions.runBlocking(new SequentialAction(liftClass.bucketUp() ));
             }
-            if (gamepad2.a){
-                Actions.runBlocking(new InstantAction(() -> liftClass.bucket.setPosition(1)));
+
+            if (gamepad2.b){
+                Actions.runBlocking(new ParallelAction(
+                        liftClass.bucketDown(),
+                        liftClass.extend()
+                ));
             }
 
             telemetry.addData("Actions Size", actions.size());

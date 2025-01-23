@@ -31,10 +31,7 @@ public class Lift {
 
     // public Action retract(){ return new Intake.Retract(); }
 
-    public Action extend(){ return new Lift.Extend(); }
-    public Action retract(){ return new Lift.Retract(); }
-    public Action bucketUp(){ return new BucketUp(); }
-    public Action bucketDown(){ return new Lift.BucketDown(); }
+
     public class Extend implements Action{
 
         @Override
@@ -42,12 +39,12 @@ public class Lift {
             double pos = slides.getCurrentPosition();
             telemetryPacket.put("liftPos", pos);
             // 1450 -> counts per rev
-            if (pos < 9700) {
-                slides.setTargetPosition(9700);
-                while (pos < 9650){
-                    slides.setPower(1);
-                    slideExtended = true;
+            if (pos < 8525) {
+                slides.setTargetPosition(8550);
+                while (pos < 8550){
+                    slides.setPower(.8);
                 }
+                slideExtended = true;
                 slides.setPower(0);
                 return true;
             } else {
@@ -65,8 +62,8 @@ public class Lift {
             if (pos > 0){
                 slides.setTargetPosition(0);
                 while (pos > 0){
-                    slides.setTargetPosition(9700);
-                    slides.setPower(1);
+                    slides.setTargetPosition(0);
+                    slides.setPower(.8);
                     slideExtended = true;
                 }
                 slideExtended = false;
@@ -81,14 +78,9 @@ public class Lift {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            /*double targetPos = 1;
-            double currentPos = bucket.getPosition();
-            int times = (int)((targetPos - currentPos) / .25);
+            double targetPos = 1;
 
-            for (int i = 0; i < times; i++){
-                bucket.setPosition(currentPos + (times * i));
-            }*/
-            bucket.setPosition(1);
+            bucket.setPosition(targetPos);
 
             return false;
         }
@@ -97,18 +89,17 @@ public class Lift {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            double targetPos = 0;
-            double currentPos = bucket.getPosition();
-            while (currentPos > targetPos){
-                bucket.setPosition(currentPos / 2);
-                currentPos = bucket.getPosition();
-                if (currentPos <= 0.05){
-                    bucket.setPosition(targetPos);
-                }
-            }
+            double targetPos = .2;
+
+            bucket.setPosition(targetPos);
+
             return true;
         }
     }
 
+    public Action extend(){ return new Lift.Extend(); }
+    public Action retract(){ return new Lift.Retract(); }
+    public Action bucketUp(){ return new BucketUp(); }
+    public Action bucketDown(){ return new Lift.BucketDown(); }
 
 }

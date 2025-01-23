@@ -103,8 +103,8 @@ public class tele extends LinearOpMode {
             if (LIFT_TARGET_POSITION < 0){
                 LIFT_TARGET_POSITION = 1;
             }
-            if (LIFT_TARGET_POSITION > 6000){
-                LIFT_TARGET_POSITION = 6000;
+            if (LIFT_TARGET_POSITION > 8750){
+                LIFT_TARGET_POSITION = 8750;
             }
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             if (LIFT_TARGET_POSITION == 0){
