@@ -17,26 +17,67 @@ public class Intake{
     private DcMotor slides;
     private CRServo spinner;
     private TouchSensor eater;
+    private Servo wrist;
     private boolean init, eaten, slideExtended;
 
     public Intake(HardwareMap hardwareMap){
-        slides = hardwareMap.get(DcMotorEx.class, "intakeMotor");
+        /*slides = hardwareMap.get(DcMotorEx.class, "intakeMotor");
         slides.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        slides.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        slides.setMode(DcMotor.RunMode.RUN_USING_ENCODER);*/
+
+        wrist = hardwareMap.get(Servo.class, "wrist");
 
         spinner = hardwareMap.get(CRServo.class, "spinner");
-        eater = hardwareMap.get(TouchSensor.class, "eater");
+        // eater = hardwareMap.get(TouchSensor.class, "eater");
 
         init = true;
         slideExtended = false;
     }
 
-    public Action retract(){
+    /*public Action retract(){
         return new Retract();
-    }
+    }*/
     public Action extend() {return new Extend(); }
     public Action eat() {return new Eat(); }
 
+    public Action wristDown() { return new WristDown(); }
+    public Action wristUp() {return new WristUp(); }
+
+
+    public class WristDown implements Action{
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            double targetPos = .2;
+            for (int i =0; i <= 6; i++){
+                if (wrist.getPosition() > .20){
+                    wrist.setPosition(targetPos + (targetPos - wrist.getPosition()) / 2);
+                    if (wrist.getPosition() <= .25){
+                        wrist.setPosition(targetPos);
+                    }
+                }
+            }
+
+            return false;
+        }
+    }
+    public class WristUp implements Action{
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            double targetPos = .7;
+            for (int i =0; i <= 6; i++){
+                if (wrist.getPosition() < .7){
+                    wrist.setPosition(targetPos - (targetPos - wrist.getPosition()) / 2);
+                    if (wrist.getPosition() >= .65){
+                        wrist.setPosition(targetPos);
+                    }
+                }
+            }
+
+            return false;
+        }
+    }
     public class Retract implements Action{
 
         @Override
@@ -83,7 +124,7 @@ public class Intake{
             }
             spinner.setPower(0);
             if (slideExtended){
-                retract();
+                //retract();
             }
             return true;
         }

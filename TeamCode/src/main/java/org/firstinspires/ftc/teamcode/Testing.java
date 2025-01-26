@@ -39,6 +39,7 @@ public class Testing extends LinearOpMode {
             maxHeight = 0;
 
             Lift liftClass = new Lift(hardwareMap);
+            Intake intakeClass = new Intake(hardwareMap);
             //1450
             waitForStart();
             while (opModeIsActive()){
@@ -52,8 +53,13 @@ public class Testing extends LinearOpMode {
             }
 
             if (gamepad2.b){
-                Actions.runBlocking(new ParallelAction(
-                        liftClass.bucketDown(),
+                Actions.runBlocking(new SequentialAction(
+                        new ParallelAction(
+                                liftClass.bucketDown(),
+                                liftClass.retract()
+                        ),
+                        intakeClass.wristUp(),
+                        intakeClass.wristDown(),
                         liftClass.extend()
                 ));
             }
