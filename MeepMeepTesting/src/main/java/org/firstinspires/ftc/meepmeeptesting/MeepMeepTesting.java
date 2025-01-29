@@ -40,14 +40,36 @@ public class MeepMeepTesting {
                         .addDisplacementMarker(() -> {
 
                         })
+                        .splineToConstantHeading(new Vector2d(-56, -12), Math.toRadians(180))
+                        .forward(3) // Pick up second element
+                        .addDisplacementMarker(() -> {
+
+                        })
+                        .lineTo(new Vector2d(-55, -55)) // Score at basket
+                        .addDisplacementMarker(() -> {
+
+                        })
 
                         .build());
         RoadRunnerBotEntity leftBot = new DefaultBotBuilder(meepMeep)
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(25, 25, Math.toRadians(180), Math.toRadians(180), 18)
-                .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(30, -60, Math.toRadians(180)))
-
+                .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(30, 60, Math.toRadians(0)))
+                        .lineTo(new Vector2d(33, 60))
                         .build());
+        RoadRunnerBotEntity extra1 = new DefaultBotBuilder(meepMeep)
+                // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
+                .setConstraints(25, 25, Math.toRadians(180), Math.toRadians(180), 18)
+                .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(-30, 60, Math.toRadians(0)))
+                        .lineTo(new Vector2d(33, 60))
+                        .build());
+        RoadRunnerBotEntity extra2 = new DefaultBotBuilder(meepMeep)
+                // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
+                .setConstraints(25, 25, Math.toRadians(180), Math.toRadians(180), 18)
+                .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(30, -60, Math.toRadians(0)))
+                        .lineTo(new Vector2d(33, 60))
+                        .build());
+
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_INTOTHEDEEP_JUICE_DARK)
                 .setDarkMode(true)
@@ -56,11 +78,3 @@ public class MeepMeepTesting {
                 .start();
     }
 }
-
-/*
-Lift lift = new Lift();
-
-lift.up(1000);
-
-
- */
