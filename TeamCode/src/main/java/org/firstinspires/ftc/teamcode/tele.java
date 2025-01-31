@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.teamcode.Mechanism.Lift;
 @TeleOp
@@ -20,6 +21,7 @@ public class tele extends LinearOpMode {
     private Servo wrist, bucket;
     private CRServo intake;
     private boolean init;
+    private TouchSensor touch;
     private int LIFT_TARGET_POSITION = 0;
     @Override
     public void runOpMode() throws InterruptedException {
