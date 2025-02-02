@@ -35,17 +35,5 @@ public class Robot {
         spinner = hardwareMap.get(Servo.class, "spinner");
         bucket = hardwareMap.get(Servo.class, "bucket");
     }
-
-    public boolean slideUp(){
-        return true;
-    }
-
-
-    public double distanceToCount(double distance, double radius){
-        double counts = (distance / radius) * 1450 ;
-        // distance = counts * revolution * radius
-        return counts;
-    }
-
 }
 

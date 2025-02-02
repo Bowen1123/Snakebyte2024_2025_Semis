@@ -14,16 +14,16 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
 public class Intake{
-    private DcMotor slides;
+    private DcMotor horizonatal;
     private CRServo spinner;
-    private TouchSensor eater;
+    private TouchSensor sensor;
     private Servo wrist;
     private boolean init, eaten, slideExtended;
 
     public Intake(HardwareMap hardwareMap){
-        /*slides = hardwareMap.get(DcMotorEx.class, "intakeMotor");
-        slides.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        slides.setMode(DcMotor.RunMode.RUN_USING_ENCODER);*/
+        horizonatal = hardwareMap.get(DcMotorEx.class, "horizontal");
+        horizonatal.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        horizonatal.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         wrist = hardwareMap.get(Servo.class, "wrist");
 
@@ -38,7 +38,6 @@ public class Intake{
         return new Retract();
     }*/
     public Action extend() {return new Extend(); }
-    public Action eat() {return new Eat(); }
 
     public Action wristDown() { return new WristDown(); }
     public Action wristUp() {return new WristUp(); }
@@ -48,16 +47,10 @@ public class Intake{
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            double targetPos = .2;
-            for (int i =0; i <= 6; i++){
-                if (wrist.getPosition() > .20){
-                    wrist.setPosition(targetPos + (targetPos - wrist.getPosition()) / 2);
-                    if (wrist.getPosition() <= .25){
-                        wrist.setPosition(targetPos);
-                    }
-                }
-            }
-
+            double targetPos = 1;
+            wrist.setPosition(targetPos /2);
+            wrist.setPosition(targetPos - .1);
+            wrist.setPosition(targetPos);
             return false;
         }
     }
@@ -65,16 +58,8 @@ public class Intake{
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            double targetPos = .7;
-            for (int i =0; i <= 6; i++){
-                if (wrist.getPosition() < .7){
-                    wrist.setPosition(targetPos - (targetPos - wrist.getPosition()) / 2);
-                    if (wrist.getPosition() >= .65){
-                        wrist.setPosition(targetPos);
-                    }
-                }
-            }
-
+            double targetPos = .3;
+            wrist.setPosition(targetPos);
             return false;
         }
     }
@@ -82,11 +67,11 @@ public class Intake{
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            double pos = slides.getCurrentPosition();
+            double pos = horizonatal.getCurrentPosition();
             telemetryPacket.put("liftPos", pos);
             // 1450 -> counts per rev
             if (pos < 3000.0) {
-                slides.setTargetPosition(3000);
+                horizonatal.setTargetPosition(3000);
                 slideExtended = true;
                 return true;
             } else {
@@ -100,39 +85,21 @@ public class Intake{
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            double pos = slides.getCurrentPosition();
+            double pos = Math.abs(horizonatal.getCurrentPosition());
             telemetryPacket.put("liftPos", pos);
             // 1450 -> counts per rev
-            if (pos > 0) {
-                slides.setTargetPosition(0);
-                slideExtended = false;
-                return true;
+            if (pos < 1500) {
+                while (pos < 1500){
+                    horizonatal.setTargetPosition(1500);
+                    horizonatal.setPower(.4);
+                    pos = Math.abs(horizonatal.getCurrentPosition());
+                }
+                return false;
             } else {
                 return false;
             }
         }
     }
 
-    public class Eat implements Action{
 
-
-        @Override
-        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            eaten = eater.isPressed();
-            while (eaten != true){
-                spinner.setPower(1);
-            }
-            spinner.setPower(0);
-            if (slideExtended){
-                //retract();
-            }
-            return true;
-        }
-    }
-
-    public void throwUp(){
-
-        spinner.setPower(-1);
-
-    }
 }

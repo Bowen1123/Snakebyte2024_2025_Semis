@@ -1,13 +1,19 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Auto;
 
+import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
+import com.acmerobotics.roadrunner.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.teamcode.MecanumDrive;
 
 @Autonomous
 public class leftAuto extends LinearOpMode {
@@ -43,10 +49,44 @@ public class leftAuto extends LinearOpMode {
         wrist = hardwareMap.get(Servo.class, "wrist");
         bucket = hardwareMap.get(Servo.class, "bucket");
         waitForStart();
-        bucket.setPosition(.6);
-        wrist.setPosition(0.32);
         while (opModeIsActive()){
-            int brEnc = rightBack.getCurrentPosition();
+
+            ElapsedTime time = new ElapsedTime();
+
+            while (time.seconds() < 5){
+                leftFront.setPower(.2);
+                leftBack.setPower(.2);
+                rightFront.setPower(.2);
+                rightBack.setPower(.2);
+            }
+
+            terminateOpModeNow();
+        }
+    }
+
+    public void pathing_1(){
+        MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(0, 0 ,0));
+        TrajectoryActionBuilder tab1 = drive.actionBuilder(new Pose2d(leftBack.getCurrentPosition(), leftFront.getCurrentPosition(),0 ))
+                .lineToYSplineHeading(33, Math.toRadians(0))
+                .waitSeconds(2)
+                .setTangent(Math.toRadians(90))
+                .lineToY(48)
+                .setTangent(Math.toRadians(0))
+                .lineToX(32)
+                .strafeTo(new Vector2d(44.5, 30))
+                .turn(Math.toRadians(180))
+                .lineToX(47.5)
+                .waitSeconds(3);
+    }
+
+    public void liftUp(){
+        lift.setTargetPosition(8750);
+        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        lift.setPower(-.8);
+    }
+}
+// Stuff I moved
+/*int brEnc = rightBack.getCurrentPosition();
             while (brEnc <=16446 ){
                 leftFront.setPower(-0.45);
                 leftBack.setPower(-0.45);
@@ -71,14 +111,4 @@ public class leftAuto extends LinearOpMode {
 
             while (e.seconds()< 5){
                 bucket.setPosition(0.9);
-            }
-            terminateOpModeNow();
-        }
-    }
-
-    public void liftUp(){
-        lift.setTargetPosition(8750);
-        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        lift.setPower(-.8);
-    }
-}
+            }*/
