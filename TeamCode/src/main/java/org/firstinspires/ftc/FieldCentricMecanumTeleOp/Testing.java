@@ -24,8 +24,8 @@ public class Testing extends LinearOpMode {
 
             //2750
             waitForStart();
-            while (opModeIsActive()){
-                intake.retract();
+        while (opModeIsActive()) {
+            intake.retract();
 
 
             /*telemetry.addData("Lift Position: ", lift.getCurrentPosition());
