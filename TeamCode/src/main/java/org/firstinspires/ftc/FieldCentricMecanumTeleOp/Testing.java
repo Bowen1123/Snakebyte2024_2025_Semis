@@ -1,11 +1,10 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.FieldCentricMecanumTeleOp;
 
-import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.teamcode.Mechanism.Intake;
+import org.firstinspires.ftc.FieldCentricMecanumTeleOp.Mechanism.Intake;
 
 @Autonomous(name="Testing", group = "Test")
 public class Testing extends LinearOpMode {

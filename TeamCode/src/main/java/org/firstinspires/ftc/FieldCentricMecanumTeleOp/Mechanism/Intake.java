@@ -1,6 +1,4 @@
-package org.firstinspires.ftc.teamcode.Mechanism;
-
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
+package org.firstinspires.ftc.FieldCentricMecanumTeleOp.Mechanism;
 
 import androidx.annotation.NonNull;
 

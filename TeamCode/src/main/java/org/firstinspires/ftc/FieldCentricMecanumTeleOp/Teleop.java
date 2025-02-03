@@ -1,8 +1,5 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.FieldCentricMecanumTeleOp;
 
-import static org.firstinspires.ftc.teamcode.MecanumDrive.PARAMS;
-
-import com.acmerobotics.roadrunner.ftc.LazyImu;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
