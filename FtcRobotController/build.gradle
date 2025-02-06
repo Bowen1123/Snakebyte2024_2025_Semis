@@ -27,4 +27,8 @@ android {
     namespace = 'com.qualcomm.ftcrobotcontroller'
 }
 
+dependencies {
+    implementation 'org.firstinspires.ftc:RobotCore:10.2.0'
+}
+
 apply from: '../build.dependencies.gradle'
