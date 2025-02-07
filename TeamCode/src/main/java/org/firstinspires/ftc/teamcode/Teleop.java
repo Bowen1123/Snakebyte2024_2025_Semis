@@ -37,14 +37,13 @@ public class Teleop extends LinearOpMode {
         Servo wrist = hardwareMap.get(Servo.class, "wrist");
         CRServo spinner = hardwareMap.get(CRServo.class, "spinner");
         DcMotor motor = hardwareMap.get(DcMotor.class, "lift");
-        DigitalChannel sensor = hardwareMap.get(DigitalChannel.class, "sensor");
-        sensor.setMode(DigitalChannel.Mode.INPUT);
+        TouchSensor sensor = hardwareMap.get(TouchSensor.class, "sensor");
 
         waitForStart();
         while(opModeIsActive()){
             if (!activated){
                 // On start, move components to right positions
-                activate();
+                // activate(); this was supposed to move the robot to preset position
                 activated = true;
             }
 
@@ -102,7 +101,7 @@ public class Teleop extends LinearOpMode {
                     transfer();
                 }
 
-                if (sensor.getState() != true){
+                if (sensor.isPressed() == true){
                     Actions.runBlocking(new SequentialAction(
                             lift.retract(),
                             lift.bucketDown(),
@@ -110,7 +109,7 @@ public class Teleop extends LinearOpMode {
                             intake.wristDown()
                     ));
                 }
-                telemetry.addData("Sensor", sensor.getState() == true);
+                telemetry.addData("Sensor", sensor.isPressed() == true);
                 telemetry.update();
 
 
