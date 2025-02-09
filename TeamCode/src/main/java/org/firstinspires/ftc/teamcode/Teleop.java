@@ -38,6 +38,15 @@ public class Teleop extends LinearOpMode {
         CRServo spinner = hardwareMap.get(CRServo.class, "spinner");
         DcMotor motor = hardwareMap.get(DcMotor.class, "lift");
         TouchSensor sensor = hardwareMap.get(TouchSensor.class, "sensor");
+        imu = hardwareMap.get(IMU.class, "imu");
+        IMU imu = hardwareMap.get(IMU.class, "imu");
+        // Adjust the orientation parameters to match your robot
+        IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
+                RevHubOrientationOnRobot.LogoFacingDirection.LEFT,
+                RevHubOrientationOnRobot.UsbFacingDirection.UP));
+        // Without this, the REV Hub's orientation is assumed to be logo up / USB forward
+        imu.initialize(parameters);
+
 
         waitForStart();
         while(opModeIsActive()){
@@ -48,9 +57,9 @@ public class Teleop extends LinearOpMode {
             }
 
 
+            // Retrieve the IMU from the hardware map
 
-
-
+            telemetry.addData("Heading: ", imu.getRobotYawPitchRollAngles().getYaw());
 
 
                 // -------------------- Controls -----------------------

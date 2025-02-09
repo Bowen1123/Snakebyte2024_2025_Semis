@@ -63,31 +63,31 @@ public final class MecanumDrive {
 
         // drive model parameters
         public double inPerTick = (double) (144 - 18) / (63000); // 0.002
-        public double lateralInPerTick = 0.0013437013149215744;
-        public double trackWidthTicks = 5816.300802581842;
+        public double lateralInPerTick = 0.0013785034083290595;
+        public double trackWidthTicks = 5850.708352143772;
 
         // feedforward parameters (in tick units)
-        public double kS = 0.9487905384822968;
-        public double kV = 0.00028962266120502944;
-        public double kA = 0.000035;
+        public double kS = 0.8253379821704034; //1.7453379821704034
+        public double kV = 0.00023880347072864323;
+        public double kA = 0.000078;
 
         // path profile parameters (in inches)
-        public double maxWheelVel = 50;
-        public double minProfileAccel = -30;
-        public double maxProfileAccel = 50;
+        public double maxWheelVel = 40;
+        public double minProfileAccel = -35;
+        public double maxProfileAccel = 35;
 
         // turn profile parameters (in radians)
         public double maxAngVel = Math.PI; // shared with path
         public double maxAngAccel = Math.PI;
 
         // path controller gains
-        public static double axialGain = 0.0;
-        public static double lateralGain = 0.0;
-        public static double headingGain = 50; // shared with turn
+        public  double axialGain = 1;
+        public  double lateralGain = 1;
+        public  double headingGain = 3; // shared with turn
 
-        public double axialVelGain = 0.0;
-        public double lateralVelGain = 0.0;
-        public double headingVelGain = 0.0; // shared with turn
+        public double axialVelGain = 0;
+        public double lateralVelGain = 0;
+        public double headingVelGain = 0; // shared with turn
     }
 
     public static Params PARAMS = new Params();
@@ -234,6 +234,7 @@ public final class MecanumDrive {
         rightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+
         leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
         leftFront.setDirection((DcMotorSimple.Direction.REVERSE));
 
@@ -245,9 +246,10 @@ public final class MecanumDrive {
         lazyImu = new LazyImu(hardwareMap, "imu", new RevHubOrientationOnRobot(
                 PARAMS.logoFacingDirection, PARAMS.usbFacingDirection));
 
+
         voltageSensor = hardwareMap.voltageSensor.iterator().next();
 
-        localizer = new TwoDeadWheelLocalizer(hardwareMap, lazyImu.get(), PARAMS.inPerTick, new Pose2d(0,0,0));
+        localizer = new TwoDeadWheelLocalizer(hardwareMap, lazyImu.get(), PARAMS.inPerTick, pose);
 
         FlightRecorder.write("MECANUM_PARAMS", PARAMS);
     }

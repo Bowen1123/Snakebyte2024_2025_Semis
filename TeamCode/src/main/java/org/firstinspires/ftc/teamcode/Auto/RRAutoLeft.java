@@ -9,6 +9,7 @@ import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.Mechanism.Intake;
@@ -21,21 +22,24 @@ public class RRAutoLeft extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         waitForStart();
 
-        Pose2d initialPose = new Pose2d(-30, -60, Math.toRadians(180));
+        Pose2d initialPose = new Pose2d(-60, 20, Math.toRadians(180));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
         Intake intake = new Intake(hardwareMap);
         Lift lift = new Lift(hardwareMap);
         int vis = 1;
 
         TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
-                .lineToX(-60);
-        //here is where we would call the methods such as lift.bucketUp to score
-//        TrajectoryActionBuilder tab2 = drive.actionBuilder(initialPose)
-//                .lineToYSplineHeading(-10, Math.toRadians(100));
+                .setTangent(Math.toRadians(-90))
+                .turn(-90)
+                .lineToY(40)
+                .strafeTo(new Vector2d(-20,50));
+
+
+
+
 
         Actions.runBlocking(new SequentialAction(
-                tab1.build(),
-                lift.bucketUp()
+                tab1.build()
         ));
     }
 }
