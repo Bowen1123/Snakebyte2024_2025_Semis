@@ -43,7 +43,7 @@ public class Testing extends LinearOpMode {
         waitForStart();
 
         Pose2d initialPose = new Pose2d(0, 0, Math.toRadians(0));
-        Pose2d testPose = new Pose2d(10, 40, Math.toRadians(0));
+        Pose2d testPose = new Pose2d(10, 42, Math.toRadians(0));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
         Intake intake = new Intake(hardwareMap);
         Lift lift = new Lift(hardwareMap);
@@ -73,10 +73,23 @@ public class Testing extends LinearOpMode {
 
         TrajectoryActionBuilder start = drive.actionBuilder(testPose)
                 .setTangent(Math.toRadians(0))
-                .lineToX(18)
+                .lineToX(20)
                 //.setTangent(Math.toRadians())
                 //.strafeTo(new Vector2d(20, 45))
-                .splineTo(new Vector2d(13,46), Math.toRadians(-60));
+                .splineTo(new Vector2d(15,45), Math.toRadians(-60))
+                .waitSeconds(2)
+                .splineTo(new Vector2d(33,48), Math.toRadians(-45))
+                .waitSeconds(2)
+                .splineTo(new Vector2d(30,40), Math.toRadians(-130))
+                .waitSeconds(2)
+                .splineTo(new Vector2d(13, 46), Math.toRadians(-60))
+                .waitSeconds(2)
+                .splineTo(new Vector2d(30, 50), Math.toRadians(-180))
+                .waitSeconds(2)
+                .splineTo(new Vector2d(13, 46), Math.toRadians(-60))
+                ;
+
+
 
         while(opModeIsActive()){
 

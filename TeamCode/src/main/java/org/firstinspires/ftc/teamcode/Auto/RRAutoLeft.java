@@ -27,19 +27,34 @@ public class RRAutoLeft extends LinearOpMode {
         Intake intake = new Intake(hardwareMap);
         Lift lift = new Lift(hardwareMap);
         int vis = 1;
-
+        Pose2d testPose = new Pose2d(10, 40, Math.toRadians(0));
         TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
                 .setTangent(Math.toRadians(-90))
                 .turn(-90)
                 .lineToY(40)
                 .strafeTo(new Vector2d(-20,50));
+        TrajectoryActionBuilder start = drive.actionBuilder(testPose)
+                .setTangent(Math.toRadians(0))
+                .lineToX(18)
+                //.setTangent(Math.toRadians())
+                //.strafeTo(new Vector2d(20, 45))
+                .splineTo(new Vector2d(13,46), Math.toRadians(-60))
+                .waitSeconds(2)
+                .splineTo(new Vector2d(30,40), Math.toRadians(-130))
+                .waitSeconds(2)
+                .splineTo(new Vector2d(13, 46), Math.toRadians(-60))
+                .waitSeconds(2)
+                .splineTo(new Vector2d(30, 50), Math.toRadians(-180))
+                .waitSeconds(2)
+                .splineTo(new Vector2d(13, 46), Math.toRadians(-60))
+                ;
 
 
 
 
 
         Actions.runBlocking(new SequentialAction(
-                tab1.build()
+                start.build()
         ));
     }
 }
