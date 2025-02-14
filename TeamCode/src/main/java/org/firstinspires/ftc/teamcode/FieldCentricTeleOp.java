@@ -27,6 +27,8 @@ public class FieldCentricTeleOp extends LinearOpMode{
     private CRServo intake;
     private TouchSensor touchSensor;
 
+    double headingError;
+
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -166,5 +168,25 @@ public class FieldCentricTeleOp extends LinearOpMode{
             rightFront.setPower(frontRightPower);
             rightBack.setPower(backRightPower);
         }
+        double desiredHeading = 0;
+        double currentHeading = 0;
+        double integralError = 0;
+        double previousError = 0;
+        double derivativeError = 0;
+        double error = 0;
+
+        while (opModeIsActive()){
+            previousError = error;
+            error = desiredHeading - currentHeading; // Find correction value
+            integralError += error; // Cumulate total error from target
+            derivativeError = error - previousError; // Calculate heading rate of change
+            double powerOutput = error + integralError + derivativeError;
+        }
+
+
+
+
+
+
     }
 }
