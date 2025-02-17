@@ -62,32 +62,32 @@ public final class MecanumDrive {
                 RevHubOrientationOnRobot.UsbFacingDirection.UP;
 
         // drive model parameters
-        public double inPerTick = (double) (144 - 18) / (63000); // 0.002
-        public double lateralInPerTick = 0.0013785034083290595;
-        public double trackWidthTicks = 5850.708352143772;
+        public double inPerTick = 0.002; // 0.002
+        public double lateralInPerTick = 0.0018552071470260673;
+        public double trackWidthTicks = 5613.866242802021;
 
         // feedforward parameters (in tick units)
-        public double kS = 0.8253379821704034; //1.7453379821704034
-        public double kV = 0.00023880347072864323;
-        public double kA = 0.000078;
+        public double kS = 0.8528298576899457;
+        public double kV = 0.00029890592343077735;
+        public double kA = 0.000055;
 
         // path profile parameters (in inches)
         public double maxWheelVel = 40;
         public double minProfileAccel = -35;
-        public double maxProfileAccel = 35;
+        public double maxProfileAccel = 10; // 25
 
         // turn profile parameters (in radians)
-        public double maxAngVel = Math.PI; // shared with path
-        public double maxAngAccel = Math.PI;
+        public double maxAngVel = 2.5; // shared with path
+        public double maxAngAccel = 1;
 
         // path controller gains
-        public  double axialGain = 1;
-        public  double lateralGain = 1;
-        public  double headingGain = 3; // shared with turn
+        public  double axialGain = 5;
+        public  double lateralGain = 5;
+        public  double headingGain = 7.5; // shared with turn
 
-        public double axialVelGain = 0;
-        public double lateralVelGain = 0;
-        public double headingVelGain = 0; // shared with turn
+        public double axialVelGain = 1.9;
+        public double lateralVelGain = 0.1;
+        public double headingVelGain = 1; // shared with turn
     }
 
     public static Params PARAMS = new Params();

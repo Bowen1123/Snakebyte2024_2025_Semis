@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
@@ -26,7 +27,8 @@ public class Teleop extends LinearOpMode {
     private IMU imu;
     private Lift lift;
     private Intake intake;
-    private DcMotor leftFront, leftBack, rightFront, rightBack;
+    private DcMotor leftFront, leftBack, rightFront, rightBack, motor, horizontal;
+    private double horizontalPower, liftUpPower, liftDownPower;
 
 
     @Override
@@ -36,15 +38,12 @@ public class Teleop extends LinearOpMode {
         boolean activated = false;
         Servo wrist = hardwareMap.get(Servo.class, "wrist");
         CRServo spinner = hardwareMap.get(CRServo.class, "spinner");
-        DcMotor motor = hardwareMap.get(DcMotor.class, "lift");
-        TouchSensor sensor = hardwareMap.get(TouchSensor.class, "sensor");
+
         imu = hardwareMap.get(IMU.class, "imu");
         IMU imu = hardwareMap.get(IMU.class, "imu");
-        // Adjust the orientation parameters to match your robot
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
                 RevHubOrientationOnRobot.LogoFacingDirection.LEFT,
                 RevHubOrientationOnRobot.UsbFacingDirection.UP));
-        // Without this, the REV Hub's orientation is assumed to be logo up / USB forward
         imu.initialize(parameters);
 
 
@@ -59,74 +58,72 @@ public class Teleop extends LinearOpMode {
 
             // Retrieve the IMU from the hardware map
 
-            telemetry.addData("Heading: ", imu.getRobotYawPitchRollAngles().getYaw());
+
+            // -------------------- Controls -----------------------
+
+            if (gamepad1.a){
+                Actions.runBlocking(new SequentialAction(lift.bucketDown()));
+            }
+            if(gamepad1.b){
+                Actions.runBlocking(new SequentialAction(lift.bucketUp()));
+            }
+
+            if (gamepad1.y){
+                Actions.runBlocking(new SequentialAction(intake.wristUp()));
+            }
+            if (gamepad1.x){
+                Actions.runBlocking((new SequentialAction(intake.wristDown())));
+            }
 
 
-                // -------------------- Controls -----------------------
-
-                if (gamepad1.a){
-                    Actions.runBlocking(new SequentialAction(lift.bucketDown()));
-                }
-                if(gamepad1.b){
-                    Actions.runBlocking(new SequentialAction(lift.bucketUp()));
-                }
-
-                if (gamepad1.y){
-                    Actions.runBlocking(new SequentialAction(intake.wristUp()));
-                }
-                if (gamepad1.x){
-                    Actions.runBlocking((new SequentialAction(intake.wristDown())));
-                }
-
-                if (gamepad2.dpad_up){
-                    Actions.runBlocking(new SequentialAction(lift.extend()));
-                }  else{
-                    motor.setPower(gamepad2.right_stick_y);
-                }if (gamepad2.dpad_down){
-                    Actions.runBlocking(new SequentialAction(lift.retract()));
-                }  else{
-                    motor.setPower(gamepad2.right_stick_y);
-                }
-
-                if (Math.abs(gamepad1.right_trigger) > 0.1 && gamepad1.right_bumper){
-                    spinner.setPower(-gamepad1.right_trigger);
-                } else if (Math.abs(gamepad1.right_trigger) > 0.1){
-                    spinner.setPower(
-                            gamepad1.right_trigger);
-                } else {
-                    spinner.setPower(0);
-                }
-                if(gamepad2.dpad_right){
-                    wrist.setPosition(0.95);
-                }
-                if(gamepad2.dpad_left){
-                    wrist.setPosition(1);
-                }
+            // Spinner
+            if (gamepad1.right_bumper){
+                spinner.setPower(-1);
+            } else if (gamepad1.left_bumper) {
+                spinner.setPower(1);
+            } else {
+                spinner.setPower(0);
+            }
 
 
 
-                // Transfer
-                if (gamepad1.left_bumper){
-                    transfer();
-                }
 
-                if (sensor.isPressed() == true){
-                    Actions.runBlocking(new SequentialAction(
-                            lift.retract(),
-                            lift.bucketDown(),
-                            intake.wristUp(),
-                            intake.wristDown()
-                    ));
-                }
-                telemetry.addData("Sensor", sensor.isPressed() == true);
-                telemetry.update();
+            liftUpPower = Math.abs(gamepad2.right_stick_y);
+            liftDownPower = Math.abs(gamepad2.left_stick_y);
 
+            // Lift
+            /*if (gamepad2.a && motor.getCurrentPosition() < 8350){
+                motor.setPower(1); // Up
+            } else if (gamepad2.b && motor.getCurrentPosition() > 500){
+                motor.setPower(-1);
+            } else if (liftUpPower > 0 && motor.getCurrentPosition() < 8350){
+                motor.setPower(liftUpPower);
+            } else if (liftDownPower > 0 && motor.getCurrentPosition() > 500) {
+                motor.setPower(-liftDownPower);
+            } else {
+                motor.setPower(0);
+            }*/
+            motor.setPower(gamepad2.right_stick_y);
+            if(gamepad2.dpad_right){
+                motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            }
+
+            // Horizontal
+            if (gamepad2.y && horizontal.getCurrentPosition() < 2300){
+                horizontal.setPower(1); // Out
+            } else if (gamepad2.x && horizontal.getCurrentPosition() > 400){
+                horizontal.setPower(-1);
+            } else {
+                horizontal.setPower(0);
+            }
+
+
+            telemetry.addData("Lift Position: ", motor.getCurrentPosition());
+            telemetry.addData("Horizontal Position ", horizontal.getCurrentPosition());
 
 
                 // -------------------- Drive --------------------------
-            /*double botHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
-            double rotX = Math.cos(-botHeading) - Math.sin(-botHeading);
-            double rotY = Math.sin(-botHeading) + Math.cos(-botHeading);*/
 
             double strafe = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
             double linear = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
@@ -138,11 +135,15 @@ public class Teleop extends LinearOpMode {
             double frontRightPower = (strafe - linear - turn) / denominator;
             double backRightPower = (strafe + linear - turn) / denominator;
 
-            leftFront.setPower(frontLeftPower);
-            leftBack.setPower(backLeftPower);
-            rightFront.setPower(frontRightPower);
-            rightBack.setPower(backRightPower);
+            leftFront.setPower(frontLeftPower / 1.25);
+            leftBack.setPower(backLeftPower / 1.25);
+            rightFront.setPower(frontRightPower / 1.25);
+            rightBack.setPower(backRightPower / 1.25);
             // -----------------------------------------------------
+
+            telemetry.addData("DPad: ", (gamepad1.dpad_down));
+            telemetry.addData("Right Trigger: ", gamepad1.right_trigger);
+            telemetry.update();
 
 
         }
@@ -155,6 +156,17 @@ public class Teleop extends LinearOpMode {
                 RevHubOrientationOnRobot.LogoFacingDirection.UP,
                 RevHubOrientationOnRobot.UsbFacingDirection.LEFT));
         imu.initialize(parameters);
+
+        motor = hardwareMap.get(DcMotor.class, "lift");
+        motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motor.setDirection(DcMotorSimple.Direction.REVERSE);
+        motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        horizontal = hardwareMap.get(DcMotor.class, "horizontal");
+        horizontal.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        horizontal.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        horizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         lift = new Lift(hardwareMap);
         intake = new Intake(hardwareMap);

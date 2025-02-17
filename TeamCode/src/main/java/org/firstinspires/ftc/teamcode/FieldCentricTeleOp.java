@@ -39,7 +39,7 @@ public class FieldCentricTeleOp extends LinearOpMode{
         leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
         intake = hardwareMap.get(CRServo.class, "spinner");
-        touchSensor = hardwareMap.touchSensor.get("sensor");
+        //touchSensor = hardwareMap.touchSensor.get("sensor");
 
 
         lift = hardwareMap.get(DcMotorEx.class, "lift");
@@ -50,7 +50,7 @@ public class FieldCentricTeleOp extends LinearOpMode{
         leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        intakeM = hardwareMap.get(DcMotor.class, "horizonalSlide");
+        intakeM = hardwareMap.get(DcMotor.class, "horizontal");
 
         wrist = hardwareMap.get(Servo.class, "wrist");
         bucket = hardwareMap.get(Servo.class, "bucket");
@@ -154,33 +154,25 @@ public class FieldCentricTeleOp extends LinearOpMode{
             // This ensures all the powers maintain the same ratio,
             // but only if at least one is out of the range [-1, 1]
 
-            double maxPowerOutput =
-                Math.max(Math.abs(y_rotation) + Math.abs(x_rotation) + Math.abs(rx), 1);
+            double maxPowerOutput = Math.max(Math.abs(y_rotation) + Math.abs(x_rotation) + Math.abs(rx), 1);
             // Set Motor Powers
 
             double frontLeftPower = (y_rotation + x_rotation + rx) / maxPowerOutput;
-            double backLeftPower = (y_rotation - x_rotation + rx) / maxPowerOutput;
-            double frontRightPower = (y_rotation - x_rotation - rx) / maxPowerOutput;
-            double backRightPower = (y_rotation + x_rotation - rx) / maxPowerOutput;
+            double backLeftPower = (y_rotation + x_rotation - rx) / maxPowerOutput;
+            double frontRightPower = (y_rotation - x_rotation + rx) / maxPowerOutput;
+            double backRightPower = (y_rotation - x_rotation - rx) / maxPowerOutput;
+
+            /*
+            double frontLeftPower = (strafe + linear + turn) / denominator;
+            double backLeftPower = (strafe - linear + turn) / denominator;
+            double frontRightPower = (strafe - linear - turn) / denominator;
+            double backRightPower = (strafe + linear - turn) / denominator;
+             */
 
             leftFront.setPower(frontLeftPower);
             leftBack.setPower(backLeftPower);
             rightFront.setPower(frontRightPower);
             rightBack.setPower(backRightPower);
-        }
-        double desiredHeading = 0;
-        double currentHeading = 0;
-        double integralError = 0;
-        double previousError = 0;
-        double derivativeError = 0;
-        double error = 0;
-
-        while (opModeIsActive()){
-            previousError = error;
-            error = desiredHeading - currentHeading; // Find correction value
-            integralError += error; // Cumulate total error from target
-            derivativeError = error - previousError; // Calculate heading rate of change
-            double powerOutput = error + integralError + derivativeError;
         }
 
 

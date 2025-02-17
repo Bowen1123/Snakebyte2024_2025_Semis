@@ -25,12 +25,12 @@ public class AprilTagTeleOp extends LinearOpMode {
 
 
         for (AprilTagDetection detection : currentDetections){
-            detection.ftcPose = new AprilTagPoseFtc();
-
-            int id = detection.id;
-            detection.ftcPose.x =  detection.rawPose.x;
-            detection.ftcPose.y =  detection.rawPose.z;
-            detection.ftcPose.z = -detection.rawPose.y;
+//            detection.ftcPose = new AprilTagPoseFtc();
+//
+//            int id = detection.id;
+//            detection.ftcPose.x =  detection.rawPose.x;
+//            detection.ftcPose.y =  detection.rawPose.z;
+//            detection.ftcPose.z = -detection.rawPose.y;
 
         }
 
