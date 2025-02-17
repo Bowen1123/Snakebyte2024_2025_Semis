@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+/*package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -35,4 +35,5 @@ public class AprilTagTeleOp extends LinearOpMode {
         }
 
     }
-}
+}*/
+// this doesn't build? you are missing arguments in AprilTagPoseFTC(), you should move detection.rawPose there
