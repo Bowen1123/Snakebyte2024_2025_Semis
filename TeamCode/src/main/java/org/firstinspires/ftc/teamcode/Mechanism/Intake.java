@@ -16,9 +16,11 @@ import com.qualcomm.robotcore.hardware.TouchSensor;
 
 public class Intake{
     public static DcMotor horizontal;
+
     private CRServo spinner;
     //private TouchSensor sensor;
     private Servo wrist;
+    private TouchSensor touchSensor;
     private boolean init, eaten, slideExtended;
 
     public Intake (){
@@ -28,6 +30,8 @@ public class Intake{
 
         spinner = hardwareMap.get(CRServo.class, "spinner");
         wrist = hardwareMap.get(Servo.class, "wrist");
+
+        touchSensor = hardwareMap.get(TouchSensor.class, "sensor");
     }
 
     public Intake(HardwareMap hardwareMap){
@@ -129,7 +133,18 @@ public class Intake{
             }
         }
     }
-
+//    public class IntakeAuto implements Action{
+//        @Override
+//        double pos = Math.abs(horizontal.getCurrentPosition());
+//        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+//            while(!touchSensor.isPressed() && ){
+//                spinner.setPower(1);
+//
+//            }
+//            return false;
+//        }
+//
+//    }
 
     public class RetractMid implements Action{
 

@@ -122,7 +122,7 @@ public class Lift {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            double targetPos = .9;
+            double targetPos = .7;
 
             bucket.setPosition(targetPos);
 
@@ -155,7 +155,7 @@ public class Lift {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            double targetPos = .1;
+            double targetPos = .2;
 
 
 
