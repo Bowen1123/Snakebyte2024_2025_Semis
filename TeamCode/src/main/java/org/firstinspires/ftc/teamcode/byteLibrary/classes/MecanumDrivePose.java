@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.byteLibrary;
+package org.firstinspires.ftc.teamcode.byteLibrary.classes;
 
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.Twist2d;
@@ -7,12 +7,12 @@ import com.acmerobotics.roadrunner.Vector2d;
 public class MecanumDrivePose {
     private final MecanumDriveKinematics kinematics;
     private Pose2d robotPose;
-    MecanumDrivePose(MecanumDriveKinematics kinematics, Pose2d startingPose){
+    public MecanumDrivePose(MecanumDriveKinematics kinematics, Pose2d startingPose){
         this.kinematics = kinematics;
         this.robotPose = startingPose;
     }
     public void addKinematicsToPose(){
-        double[] chassisSpeeds = kinematics.convertWheelSpeedsToChassis(kinematics.getWheelPowers());
+        double[] chassisSpeeds = kinematics.convertWheelSpeedsToChassis(kinematics.getWheelVelocities());
         Vector2d transChange = new Vector2d(chassisSpeeds[0],
                                             chassisSpeeds[1]);
         Twist2d changePose = new Twist2d(transChange, chassisSpeeds[1]);

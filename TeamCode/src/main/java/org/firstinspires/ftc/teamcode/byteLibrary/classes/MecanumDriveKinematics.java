@@ -1,9 +1,9 @@
-package org.firstinspires.ftc.teamcode.byteLibrary;
+package org.firstinspires.ftc.teamcode.byteLibrary.classes;
 
 public class MecanumDriveKinematics {
     private final MecanumWheel[] Drives;
     private final double baseRadius; // distance between wheel and center of bot
-    MecanumDriveKinematics(MecanumWheel[] wheels, double baseRadius) {
+    public MecanumDriveKinematics(MecanumWheel[] wheels, double baseRadius) {
         // wheels should be in order vfl, vbl, vbr, vfr
         this.Drives = wheels;
         this.baseRadius = baseRadius;
@@ -36,7 +36,7 @@ public class MecanumDriveKinematics {
     public void commandChassisSpeeds(double[] chassisSpeeds){
         double[] wheelSpeeds = convertChassisSpeedsToWheels(chassisSpeeds);
         for (int i = 0; i < Drives.length; i++){
-            Drives[i].setMotorPower(wheelSpeeds[i]);
+            Drives[i].setMotorVelocity(wheelSpeeds[i]);
         }
     }
     public int[] getWheelPositions(){
@@ -52,6 +52,13 @@ public class MecanumDriveKinematics {
             powers[i] = Drives[i].getMotorPower();
         }
         return powers;
+    }
+    public double[] getWheelVelocities(){
+        double[] vel = new double[4];
+        for(int i = 0; i < vel.length; i++){
+            vel[i] = Drives[i].getMotorVelocity();
+        }
+        return vel;
     }
     public MecanumWheel[] getDrives() {
         return Drives;
