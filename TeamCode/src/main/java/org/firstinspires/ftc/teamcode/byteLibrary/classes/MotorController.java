@@ -2,13 +2,16 @@ package org.firstinspires.ftc.teamcode.byteLibrary;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-
+import com.qualcomm.robotcore.hardware.HardwareMap;
 public class MotorController {
-    private DcMotor motor;
+    private final DcMotor motor;
     private final String deviceName;
-    MotorController(DcMotor.RunMode runMode, DcMotor.ZeroPowerBehavior behavior, DcMotorSimple.Direction dir, String deviceName){
-        this.motor.setMode(runMode); this.motor.setDirection(dir); this.motor.setZeroPowerBehavior(behavior);
+    private final HardwareMap map;
+    MotorController(DcMotor.RunMode runMode, DcMotor.ZeroPowerBehavior behavior, DcMotorSimple.Direction dir, String deviceName, HardwareMap map){
         this.deviceName = deviceName;
+        this.map = map;
+        this.motor = this.map.get(DcMotor.class, this.deviceName);
+        this.motor.setMode(runMode); this.motor.setDirection(dir); this.motor.setZeroPowerBehavior(behavior);
     }
     public void setMotorPosition(int position){
         motor.setTargetPosition(position);
@@ -31,4 +34,5 @@ public class MotorController {
     public String getDeviceName() {
         return deviceName;
     }
+    public HardwareMap getMap(){return map;}
 }
