@@ -54,7 +54,8 @@ public class Testing extends LinearOpMode {
 
         waitForStart();
 
-        Pose2d startPose = new Pose2d(10, 60, Math.toRadians(-90));
+        Pose2d startPose = new Pose2d(0, 60, Math.toRadians(-90));
+        Pose2d bucketPose = new Pose2d(4, 76, Math.toRadians(45));
         MecanumDrive drive = new MecanumDrive(hardwareMap, startPose);
 
         IMU imu = hardwareMap.get(IMU.class,"imu");
@@ -65,8 +66,28 @@ public class Testing extends LinearOpMode {
         imu.initialize(parameters);
         imu.resetYaw();
 
-        TrajectoryActionBuilder forward = drive.actionBuilder(new Pose2d(0,0, Math.PI/2))
-                .lineToX(10);
+        TrajectoryActionBuilder bucket = drive.actionBuilder(startPose)
+                .setTangent(0)
+                .splineTo(new Vector2d(5, 77), Math.toRadians(45));
+
+
+
+
+
+
+        TrajectoryActionBuilder two = drive.actionBuilder(startPose)
+                .setTangent(90)
+                .splineTo(new Vector2d(20, 72), Math.toRadians(90));
+
+        TrajectoryActionBuilder one = drive.actionBuilder(bucketPose)
+                .setTangent(90)
+                .splineTo(new Vector2d(22, 78), Math.toRadians(50));
+//        TrajectoryActionBuilder blockOne = drive.actionBuilder(startPose)
+//                .turn(-Math.PI/2)
+//                .lineToX(60)
+//                .lineToX(0);
+
+
 
         while(opModeIsActive()){
             if (gamepad1.left_bumper){
@@ -76,19 +97,32 @@ public class Testing extends LinearOpMode {
 
 
             if (gamepad1.a){
-
-            }
-
-            if (gamepad1.b){
                 Actions.runBlocking(new SequentialAction(
-                        forward.build()
+                        new ParallelAction(
+                                bucket.build(),
+                                lift.extend(),
+                                lift.bucketActivate()
+                        ),
+                        lift.bucketUp(),
+                        intake.wristTravel()
                 ));
             }
 
             if (gamepad1.x){
+                Actions.runBlocking(new SequentialAction(
+                 ));
+            }
 
+            if (gamepad1.b){
+                Actions.runBlocking(new SequentialAction(
+                        one.build()
+
+                ));
             }
             if(gamepad1.y){
+                Actions.runBlocking(new SequentialAction(
+                        bucket.build()
+                ));
             }
 
 

@@ -48,9 +48,9 @@ public class Lift {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             double pos = Math.abs(slides.getCurrentPosition());
-            if (pos < 8350) {
-                slides.setTargetPosition(8350);
-                while (pos < 8350){
+            if (pos < 8450) {
+                slides.setTargetPosition(8450);
+                while (pos < 8450){
                     slides.setPower(-1);
                     pos = Math.abs(slides.getCurrentPosition());
 
@@ -155,7 +155,7 @@ public class Lift {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            double targetPos = .2;
+            double targetPos = .1;
 
 
 
