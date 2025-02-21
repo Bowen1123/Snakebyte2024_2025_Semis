@@ -57,11 +57,11 @@ public class Testing extends LinearOpMode {
         Pose2d startPose = new Pose2d(0, 60, Math.toRadians(-90));
         Pose2d bucketPose = new Pose2d(5, 77, Math.toRadians(45));
 
-        Pose2d endOfOne = new Pose2d(37.5, 50, Math.toRadians(90));
+        Pose2d endOfOne = new Pose2d(29.5, 52, Math.toRadians(65));
 
         Pose2d endAtBucket1 = new Pose2d(7,75,Math.toRadians(-45));
 
-        Pose2d endOfTwo = new Pose2d(37.5, 60, Math.toRadians(90));
+        Pose2d endOfTwo = new Pose2d(37, 59, Math.toRadians(90));
 
         Pose2d endAtBucket2 = new Pose2d(7,75,Math.toRadians(-45));
 
@@ -93,14 +93,14 @@ public class Testing extends LinearOpMode {
 
         TrajectoryActionBuilder one = drive.actionBuilder(bucketPose)
                 .setTangent(Math.toRadians(45))
-                .splineToLinearHeading(new Pose2d(20, 50, Math.toRadians(90)), Math.toRadians(90))
-                .splineToConstantHeading(new Vector2d(37.5, 50), Math.toRadians(90));
+                .splineToLinearHeading(new Pose2d(20, 52, Math.toRadians(65)), Math.toRadians(65))
+                .splineToConstantHeading(new Vector2d(29.5, 52), Math.toRadians(65));
                 //.strafeTo(new Vector2d(37.5, 52));
 
         TrajectoryActionBuilder two = drive.actionBuilder(endAtBucket1)
                 .setTangent(Math.toRadians(45))
-                .splineToLinearHeading(new Pose2d(25, 60, Math.toRadians(90)), Math.toRadians(90))
-                .strafeTo(new Vector2d(37.5, 60));
+                .splineToLinearHeading(new Pose2d(25, 59, Math.toRadians(90)), Math.toRadians(90))
+                .strafeTo(new Vector2d(37, 59));
 
 
         while(opModeIsActive()){
@@ -115,27 +115,47 @@ public class Testing extends LinearOpMode {
                         new ParallelAction(
                                 bucket.build(),
                                 lift.extend(),
-                                intake.spinnerTime(1),
                                 lift.bucketActivate()
                         ),
-                        lift.bucketUp()
-                        //intake.wristTravel()
+                        lift.bucketUp(),
+                        intake.wristVertical()
                 ));
             }
 
             // SECOND ACTION
             if (gamepad1.b){
                 Actions.runBlocking(new SequentialAction(
+                        new ParallelAction(
+                                one.build(),
+                                lift.retract()
+                        ),
+                        intake.wristDown(),
+                        new SleepAction(.7),
+                        lift.bucketDown(),
+                        new ParallelAction(
+                                intake.extend(),
+                                spinnerTime(6, intake)
+                        ),
+                        new SleepAction(.3),
+                        intake.retract(),
+                        new SleepAction(.5),
+                        intake.wristUp()
+                ));
+            }
+            /*if (gamepad1.b){
+                Actions.runBlocking(new SequentialAction(
                         lift.bucketDown(),
                         new ParallelAction(
                                 intake.wristVertical(),
                                 one.build(),
                                 lift.retract()
-                        ),
+                                //intake.spinnerTime(3)
+                        ),*/
+    /*                    intake.wristDown(),
+                        new SleepAction(.3),
                         new ParallelAction(
-                                intake.wristDown(),
-                                intake.extend(),
-                                intake.spinnerTime(3)
+                                intake.spinnerTime(5),
+                                intake.extend()
                         ),
                         new SleepAction(.3),
                         intake.retract(),
@@ -144,12 +164,17 @@ public class Testing extends LinearOpMode {
                         new SleepAction(.7),
                         intake.wristVertical()
                 ));
+            }*/
+            if(gamepad1.dpad_right){
+                Actions.runBlocking(new SequentialAction(
+                       intake.spinnerTime(4)
+                ));
             }
 
             // THIRD ACTION
             if(gamepad1.y){
                 Actions.runBlocking(new SequentialAction(
-
+                        intake.wristVertical(),
                         new ParallelAction(
                                 goBackToBucketFromOne.build(),
                                 lift.extend()
@@ -158,7 +183,7 @@ public class Testing extends LinearOpMode {
                 ));
             }
 
-            // FORTH ACTION
+            // FOuRTH ACTION
             if (gamepad1.x){
                 Actions.runBlocking(new SequentialAction(
                         lift.bucketDown(),
@@ -166,10 +191,10 @@ public class Testing extends LinearOpMode {
                                 two.build(),
                                 lift.retract()
                         ),
+                        intake.wristDown(),
                         new ParallelAction(
-                                intake.wristDown(),
                                 intake.extend(),
-                                intake.spinnerTime(3)
+                                spinnerTime(5.5, intake)
                         ),
                         new SleepAction(.3),
                         intake.retract(),
@@ -216,11 +241,7 @@ public class Testing extends LinearOpMode {
 
             if (gamepad2.y){
                 Actions.runBlocking(new SequentialAction(
-                        intake.wristDown(),
-                        intake.extend(),
-                        intake.spinnerTime(2),
-                        intake.wristTravel(),
-                        intake.retract()
+                        intake.spinnerTime(4)
                 ));
             }
 

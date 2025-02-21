@@ -139,8 +139,8 @@ public class Intake{
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             double pos = Math.abs(horizontal.getCurrentPosition());
-            if (pos < 1700) {
-                horizontal.setTargetPosition(1700);
+            if (pos < 1400) {
+                horizontal.setTargetPosition(1400);
                 horizontal.setPower(-.6);
                 pos = Math.abs(horizontal.getCurrentPosition());
                 return true;

@@ -110,9 +110,9 @@ public class Teleop extends LinearOpMode {
             }
 
             // Horizontal
-            if (gamepad2.y && horizontal.getCurrentPosition() < 2300){
+            if (gamepad2.y && horizontal.getCurrentPosition() < 1400){
                 horizontal.setPower(1); // Out
-            } else if (gamepad2.x && horizontal.getCurrentPosition() > 400){
+            } else if (gamepad2.x && horizontal.getCurrentPosition() > 500){
                 horizontal.setPower(-1);
             } else {
                 horizontal.setPower(0);
@@ -135,10 +135,10 @@ public class Teleop extends LinearOpMode {
             double frontRightPower = (strafe - linear - turn) / denominator;
             double backRightPower = (strafe + linear - turn) / denominator;
 
-            leftFront.setPower(frontLeftPower / 1.25);
-            leftBack.setPower(backLeftPower / 1.25);
-            rightFront.setPower(frontRightPower / 1.25);
-            rightBack.setPower(backRightPower / 1.25);
+            leftFront.setPower(frontLeftPower / 1.15);
+            leftBack.setPower(backLeftPower / 1.15);
+            rightFront.setPower(frontRightPower / 1.15);
+            rightBack.setPower(backRightPower / 1.15);
             // -----------------------------------------------------
 
             telemetry.addData("DPad: ", (gamepad1.dpad_down));
