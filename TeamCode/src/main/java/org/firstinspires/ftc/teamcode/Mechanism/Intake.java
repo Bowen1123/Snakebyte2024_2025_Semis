@@ -13,6 +13,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class Intake{
     public static DcMotor horizontal;
@@ -22,10 +23,13 @@ public class Intake{
     private Servo wrist;
     private TouchSensor touchSensor;
     private boolean init, eaten, slideExtended;
+    private double time = 0;
+    private ElapsedTime timer;
 
     public Intake (){
         horizontal = hardwareMap.get(DcMotor.class, "horizontal");
         horizontal.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        horizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         horizontal.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         spinner = hardwareMap.get(CRServo.class, "spinner");
@@ -37,10 +41,14 @@ public class Intake{
     public Intake(HardwareMap hardwareMap){
         horizontal = hardwareMap.get(DcMotor.class, "horizontal");
         horizontal.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        horizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         horizontal.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         spinner = hardwareMap.get(CRServo.class, "spinner");
         wrist = hardwareMap.get(Servo.class, "wrist");
+
+        timer = new ElapsedTime();
+
     }
 
     /*public Action retract(){
@@ -51,12 +59,32 @@ public class Intake{
     public Action wristDown() { return new WristDown(); }
     public Action wristUp() {return new WristUp(); }
     public Action wristSemi() {return new WristSemi(); }
+    public Action wristVertical() {return new WristVertical(); }
     public Action wristTravel() {return new WristTravel(); }
     public Action retractMid() {return new RetractMid(); }
+    public Action spinnerTime(double sec){
+        time = sec;
+        timer.reset();
+        return new SpinnerTime();
+    }
     public int getPos() {
         return horizontal.getCurrentPosition();
     }
+    public int getTimer() {return (int) timer.seconds(); }
 
+
+    public class SpinnerTime implements Action{
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            spinner.setPower(-1);
+            if (time < timer.seconds()){
+                spinner.setPower(0);
+                return false;
+            }
+            return true;
+        }
+    }
     public class WristUp implements Action{
 
         @Override
@@ -66,6 +94,17 @@ public class Intake{
             return false;
         }
     }
+
+    public class WristVertical implements Action{
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            double targetPos = .35;
+            wrist.setPosition(targetPos);
+            return false;
+        }
+    }
+
     public class WristDown implements Action{
 
         @Override
@@ -100,35 +139,30 @@ public class Intake{
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             double pos = Math.abs(horizontal.getCurrentPosition());
-            if (pos < 1500) {
-                horizontal.setTargetPosition(1500);
-                while (pos < 1500){
-                    horizontal.setPower(.6);
-                    pos = Math.abs(horizontal.getCurrentPosition());
-                }
+            if (pos < 1700) {
+                horizontal.setTargetPosition(1700);
+                horizontal.setPower(-.6);
+                pos = Math.abs(horizontal.getCurrentPosition());
+                return true;
+            } else {
                 horizontal.setPower(0);
                 return false;
             }
-            return false;
+
         }
     }
     public class Retract implements Action{
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            double pos = horizontal.getCurrentPosition();
-            telemetryPacket.put("liftPos", pos);
-            // 1450 -> counts per rev
-            if (pos > -5) {
-                horizontal.setTargetPosition(-5);
-                while( pos > -5){
-                    horizontal.setPower(-.4);
-                    pos = horizontal.getCurrentPosition();
-                }
-                horizontal.setPower(0);
-                slideExtended = false;
+            double pos = Math.abs(horizontal.getCurrentPosition());
+            if (pos > 500) {
+                horizontal.setTargetPosition(500);
+                horizontal.setPower(.6);
+                pos = Math.abs(horizontal.getCurrentPosition());
                 return true;
             } else {
+                horizontal.setPower(0);
                 return false;
             }
         }

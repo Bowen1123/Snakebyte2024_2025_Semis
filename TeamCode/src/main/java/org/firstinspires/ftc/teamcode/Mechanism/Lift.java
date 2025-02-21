@@ -32,6 +32,7 @@ public class Lift {
         slides = hardwareMap.get(DcMotorEx.class, "lift");
         slides.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         slides.setDirection(DcMotorSimple.Direction.REVERSE);
+        slides.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         slides.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         bucket = hardwareMap.get(Servo.class, "bucket");
@@ -42,23 +43,19 @@ public class Lift {
 
     // public Action retract(){ return new Intake.Retract(); }
 
-//I threw a wish in a well
+// I threw a wish in a well
     public class Extend implements Action{
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             double pos = Math.abs(slides.getCurrentPosition());
-            if (pos < 8450) {
-                slides.setTargetPosition(8450);
-                while (pos < 8450){
-                    slides.setPower(-1);
-                    pos = Math.abs(slides.getCurrentPosition());
-
-                }
-                slideExtended = true;
-                slides.setPower(0);
-                return false;
+            if (pos < 8400) { //8450
+                slides.setTargetPosition(8400);
+                slides.setPower(-1);
+                pos = Math.abs(slides.getCurrentPosition());
+                return true;
             } else {
+                slides.setPower(0);
                 return false;
             }
         }
@@ -68,31 +65,37 @@ public class Lift {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            double pos = slides.getCurrentPosition();
+            double pos = Math.abs(slides.getCurrentPosition());
 
-            if (pos > 500){
-                slides.setTargetPosition(0);
-                while (pos > 500){
-                    slides.setTargetPosition(500);
-                    slides.setPower(1);
-                    pos = slides.getCurrentPosition();
-                }
-                slideExtended = false;
+            if (pos > 750){
+                slides.setTargetPosition(750);
+                slides.setPower(1);
+                pos = Math.abs(slides.getCurrentPosition());
+                return true;
+            } else {
                 slides.setPower(0);
                 return false;
             }
-            if (pos < 500){
-                slides.setTargetPosition(500);
-                while (pos < 0){
-                    slides.setTargetPosition(500);
-                    slides.setPower(1);
-                    pos = slides.getCurrentPosition();
-                }
-                slideExtended = false;
+
+        }
+    }
+
+    public class Down implements Action{
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            double pos = Math.abs(slides.getCurrentPosition());
+
+            if (pos > 50){
+                slides.setTargetPosition(50);
+                slides.setPower(1);
+                pos = Math.abs(slides.getCurrentPosition());
+                return true;
+            } else {
                 slides.setPower(0);
                 return false;
             }
-            return false;
+
         }
     }
 //but now you're in my way
@@ -101,17 +104,13 @@ public class Lift {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             double pos = Math.abs(slides.getCurrentPosition());
-            // 1450 -> counts per rev
-            if (pos < 1500) {
-                slides.setTargetPosition(1500);
-                while (pos < 1500){
-                    slides.setPower(-1);
-                    pos = Math.abs(slides.getCurrentPosition());
-                }
-                slideExtended = true;
-                slides.setPower(0);
-                return false;
+            if (pos < 750) {
+                slides.setTargetPosition(750);
+                slides.setPower(-1);
+                pos = Math.abs(slides.getCurrentPosition());
+                return true;
             } else {
+                slides.setPower(0);
                 return false;
             }
         }
@@ -155,7 +154,7 @@ public class Lift {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            double targetPos = .1;
+            double targetPos = .15;
 
 
 
@@ -190,6 +189,7 @@ public class Lift {
     public Action extend(){ return new Lift.Extend(); }
     public Action retract(){ return new Lift.Retract(); }
     public Action semiExtend(){ return new Lift.Semi(); }
+    public Action down() {return new Lift.Down(); }
     public Action bucketUp(){ return new BucketUp(); }
     public Action bucketDown(){ return new Lift.BucketDown(); }
     public Action bucketSemi(){ return new Lift.BucketSemi(); }
@@ -198,6 +198,7 @@ public class Lift {
     public Action bucketStart(){
         return new Lift.BucketStart();
     }
+    public int getPos() {return slides.getCurrentPosition(); }
     public SequentialAction out() {return new SequentialAction(
             extend(),
             bucketSemi(),
