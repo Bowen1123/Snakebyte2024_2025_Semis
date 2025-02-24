@@ -26,7 +26,7 @@ public class FieldCentricTeleop extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        map();  
+        map();
 
         waitForStart();
         while (opModeIsActive()){

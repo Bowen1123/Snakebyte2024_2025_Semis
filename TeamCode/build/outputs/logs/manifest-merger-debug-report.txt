@@ -9,7 +9,6 @@ MERGED from [org.firstinspires.ftc:OnBotJava:10.2.0] /Users/bowen./.gradle/cache
 MERGED from [org.firstinspires.ftc:Blocks:10.2.0] /Users/bowen./.gradle/caches/8.9/transforms/9f25dcd8a782c54bd44365f73232bd05/transformed/Blocks-10.2.0/AndroidManifest.xml:2:1-24:12
 MERGED from [com.acmerobotics.roadrunner:ftc:0.1.15] /Users/bowen./.gradle/caches/8.9/transforms/30766eee2356e3b1c22689b49e6df67c/transformed/ftc-0.1.15/AndroidManifest.xml:3:1-12:12
 MERGED from [com.acmerobotics.dashboard:dashboard:0.4.16] /Users/bowen./.gradle/caches/8.9/transforms/2a8b801ac56271921d29d61cfac426fb/transformed/dashboard-0.4.16/AndroidManifest.xml:2:1-9:12
-MERGED from [org.team11260:fast-load:0.1.2] /Users/bowen./.gradle/caches/8.9/transforms/dcc1eae76c07193a3ee9d7390962354b/transformed/fast-load-0.1.2/AndroidManifest.xml:2:1-7:12
 MERGED from [org.firstinspires.ftc:FtcCommon:10.2.0] /Users/bowen./.gradle/caches/8.9/transforms/7f61d500452face8a0d4ca1e3e0923bc/transformed/FtcCommon-10.2.0/AndroidManifest.xml:3:1-178:12
 MERGED from [org.firstinspires.ftc:Inspection:10.2.0] /Users/bowen./.gradle/caches/8.9/transforms/f73e965cd5436d410627029af9618c31/transformed/Inspection-10.2.0/AndroidManifest.xml:2:1-30:12
 MERGED from [org.firstinspires.ftc:RobotServer:10.2.0] /Users/bowen./.gradle/caches/8.9/transforms/f6e7156c022d136afcae802b7ff03bd3/transformed/RobotServer-10.2.0/AndroidManifest.xml:2:1-9:12
@@ -104,8 +103,6 @@ MERGED from [com.acmerobotics.roadrunner:ftc:0.1.15] /Users/bowen./.gradle/cache
 MERGED from [com.acmerobotics.roadrunner:ftc:0.1.15] /Users/bowen./.gradle/caches/8.9/transforms/30766eee2356e3b1c22689b49e6df67c/transformed/ftc-0.1.15/AndroidManifest.xml:6:5-8:41
 MERGED from [com.acmerobotics.dashboard:dashboard:0.4.16] /Users/bowen./.gradle/caches/8.9/transforms/2a8b801ac56271921d29d61cfac426fb/transformed/dashboard-0.4.16/AndroidManifest.xml:5:5-7:41
 MERGED from [com.acmerobotics.dashboard:dashboard:0.4.16] /Users/bowen./.gradle/caches/8.9/transforms/2a8b801ac56271921d29d61cfac426fb/transformed/dashboard-0.4.16/AndroidManifest.xml:5:5-7:41
-MERGED from [org.team11260:fast-load:0.1.2] /Users/bowen./.gradle/caches/8.9/transforms/dcc1eae76c07193a3ee9d7390962354b/transformed/fast-load-0.1.2/AndroidManifest.xml:5:5-44
-MERGED from [org.team11260:fast-load:0.1.2] /Users/bowen./.gradle/caches/8.9/transforms/dcc1eae76c07193a3ee9d7390962354b/transformed/fast-load-0.1.2/AndroidManifest.xml:5:5-44
 MERGED from [org.firstinspires.ftc:FtcCommon:10.2.0] /Users/bowen./.gradle/caches/8.9/transforms/7f61d500452face8a0d4ca1e3e0923bc/transformed/FtcCommon-10.2.0/AndroidManifest.xml:8:5-44
 MERGED from [org.firstinspires.ftc:FtcCommon:10.2.0] /Users/bowen./.gradle/caches/8.9/transforms/7f61d500452face8a0d4ca1e3e0923bc/transformed/FtcCommon-10.2.0/AndroidManifest.xml:8:5-44
 MERGED from [org.firstinspires.ftc:Inspection:10.2.0] /Users/bowen./.gradle/caches/8.9/transforms/f73e965cd5436d410627029af9618c31/transformed/Inspection-10.2.0/AndroidManifest.xml:7:5-44

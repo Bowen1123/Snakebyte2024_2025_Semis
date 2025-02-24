@@ -22,7 +22,6 @@ buildscript {
     }
 
     dependencies {
-        classpath 'org.team11260:fast-load-plugin:0.1.2'
 
 
 
@@ -34,7 +33,6 @@ buildscript {
 
 apply from: '../build.common.gradle'
 apply from: '../build.dependencies.gradle'
-apply plugin: 'org.team11260.fast-load-plugin'
 
 
 android {
@@ -49,9 +47,6 @@ repositories {
     maven {
         url = 'https://maven.brott.dev/'
     }
-    maven {
-        url = 'https://www.matthewo.tech/maven/'
-    }
 
 }
 
@@ -63,5 +58,4 @@ dependencies {
     implementation "com.acmerobotics.roadrunner:actions:1.0.1"
     implementation "com.acmerobotics.dashboard:dashboard:0.4.16"
 
-    implementation 'org.team11260:fast-load:0.1.2'
 }
