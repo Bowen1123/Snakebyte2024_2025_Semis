@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -36,7 +37,7 @@ import java.util.List;
  */
 @TeleOp(name = "Concept: AprilTag Localization", group = "Concept")
 public class AprilTagTeleOp extends LinearOpMode {
-
+    private Pose2d pose = new Pose2d(0,0,0);
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
 
     /**
@@ -186,7 +187,12 @@ public class AprilTagTeleOp extends LinearOpMode {
      */
     private void telemetryAprilTag() {
 
+
+
         List<AprilTagDetection> currentDetections = aprilTag.getDetections();
+
+
+
         telemetry.addData("# AprilTags Detected", currentDetections.size());
 
         // Step through the list of detections and display info for each one.
@@ -201,15 +207,19 @@ public class AprilTagTeleOp extends LinearOpMode {
                         detection.robotPose.getOrientation().getPitch(AngleUnit.DEGREES),
                         detection.robotPose.getOrientation().getRoll(AngleUnit.DEGREES),
                         detection.robotPose.getOrientation().getYaw(AngleUnit.DEGREES)));
+
+                pose = new Pose2d(detection.robotPose.getPosition().y, detection.robotPose.getPosition().x, detection.robotPose.getOrientation().getYaw(AngleUnit.RADIANS));
             } else {
                 telemetry.addLine(String.format("\n==== (ID %d) Unknown", detection.id));
                 telemetry.addLine(String.format("Center %6.0f %6.0f   (pixels)", detection.center.x, detection.center.y));
             }
         }   // end for() loop
 
+        telemetry.addData("Pose: ", pose.toString());
         // Add "key" information to telemetry
         telemetry.addLine("\nkey:\nXYZ = X (Right), Y (Forward), Z (Up) dist.");
         telemetry.addLine("PRY = Pitch, Roll & Yaw (XYZ Rotation)");
+
 
     }   // end method telemetryAprilTag()
 

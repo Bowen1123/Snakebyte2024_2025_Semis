@@ -89,7 +89,7 @@ public class Intake{
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            double targetPos = .5;
+            double targetPos = .75;
             wrist.setPosition(targetPos);
             return false;
         }
@@ -109,7 +109,7 @@ public class Intake{
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            double targetPos = 0.00;
+            double targetPos = 0.25;
             wrist.setPosition(targetPos);
             return false;
         }

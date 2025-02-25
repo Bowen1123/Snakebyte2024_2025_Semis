@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
@@ -27,6 +28,7 @@ public class FieldCentricTeleop extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         map();
+
 
         waitForStart();
         while (opModeIsActive()){
@@ -78,7 +80,13 @@ public class FieldCentricTeleop extends LinearOpMode {
             motor.setPower(gamepad2.right_stick_y);
 
             if (gamepad2.right_bumper) {
-                imu.resetYaw();
+                Pose2d bucketPose = new Pose2d(5, 77, Math.toRadians(45));
+                MecanumDrive drive = new MecanumDrive(hardwareMap, bucketPose);
+                //Drive drive =
+            }
+            if(gamepad2.left_bumper){
+                //Pose2d currentPose = drive.getPoseEstimate();
+
             }
 
 
@@ -90,6 +98,7 @@ public class FieldCentricTeleop extends LinearOpMode {
             } else {
                 horizontal.setPower(0);
             }
+
 
             // --------------------------- DRIVE -------------------------------- //
 
@@ -148,6 +157,8 @@ public class FieldCentricTeleop extends LinearOpMode {
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
 
         spinner = hardwareMap.get(CRServo.class, "spinner");
+
+
     }
 
 }

@@ -68,6 +68,7 @@ public class Testing extends LinearOpMode {
         Pose2d testing = new Pose2d(10, 60, 0);
         MecanumDrive drive = new MecanumDrive(hardwareMap, startPose);
 
+
         IMU imu = hardwareMap.get(IMU.class,"imu");
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
                 RevHubOrientationOnRobot.LogoFacingDirection.LEFT,
@@ -244,6 +245,7 @@ public class Testing extends LinearOpMode {
                         intake.spinnerTime(4)
                 ));
             }
+
 
             double strafe = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
             double linear = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
