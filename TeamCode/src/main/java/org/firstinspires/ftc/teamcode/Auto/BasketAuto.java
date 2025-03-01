@@ -24,7 +24,7 @@ public class BasketAuto extends LinearOpMode {
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
         Intake intake = new Intake(hardwareMap);
         Lift lift = new Lift(hardwareMap);
-        TouchSensor sensor = hardwareMap.get(TouchSensor.class,"sensor");
+        // TouchSensor sensor = hardwareMap.get(TouchSensor.class,"sensor");
 
         waitForStart();
 

@@ -80,7 +80,7 @@ public class Testing extends LinearOpMode {
 
         TrajectoryActionBuilder bucket = drive.actionBuilder(startPose)
                 .setTangent(0)
-                .splineTo(new Vector2d(5, 77), Math.toRadians(45));
+                .splineTo(new Vector2d(5, 77), Math.toRadians(-45));
 
         TrajectoryActionBuilder goBackToBucketFromOne = drive.actionBuilder(endOfOne)
                 .setTangent(180)
@@ -102,13 +102,14 @@ public class Testing extends LinearOpMode {
                 .setTangent(Math.toRadians(45))
                 .splineToLinearHeading(new Pose2d(25, 59, Math.toRadians(90)), Math.toRadians(90))
                 .strafeTo(new Vector2d(37, 59));
-
+        drive.localizer.setPose(bucketPose);
 
         while(opModeIsActive()){
             if (gamepad1.left_bumper){
                 Lift.slides.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 Intake.horizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             }
+
 
             // FIRST ACTION
             if (gamepad1.a){
@@ -218,17 +219,7 @@ public class Testing extends LinearOpMode {
             }
 
 
-            if (gamepad2.a){
-                Actions.runBlocking(new SequentialAction(
-                        lift.down()
-                ));
-            }
 
-            if (gamepad2.b){
-                Actions.runBlocking(new SequentialAction(
-                        intake.retract()
-                ));
-            }
 
             if (gamepad2.x){
                 Actions.runBlocking(new SequentialAction(
@@ -240,11 +231,23 @@ public class Testing extends LinearOpMode {
                 ));
             }
 
-            if (gamepad2.y){
+            if (gamepad2.a) {
+                drive.localizer.update();
+                TrajectoryActionBuilder bucketTest = drive.actionBuilder(drive.localizer.getPose())
+                        .setTangent(0)
+                        .splineTo(new Vector2d(5, 77), Math.toRadians(45));
                 Actions.runBlocking(new SequentialAction(
-                        intake.spinnerTime(4)
+                        bucketTest.build()
                 ));
+
             }
+            if(gamepad1.dpad_down){
+                telemetry.addData("Test", true);
+            }
+            if (gamepad1.dpad_right){
+                telemetry.addData("Test", false);
+            }
+
 
 
             double strafe = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
@@ -266,6 +269,10 @@ public class Testing extends LinearOpMode {
             telemetry.addData("Horizontal: ", intake.getPos());
             telemetry.addData("Lift: ", lift.getPos());
             telemetry.addData("Timer: ", intake.getTimer());
+            telemetry.addData("Pose", drive.localizer.getPose());
+            Pose2d currentPose = drive.localizer.getPose();
+            //telemetry.addData("X", currentPose);
+            drive.localizer.update();
             telemetry.update();
 
 
