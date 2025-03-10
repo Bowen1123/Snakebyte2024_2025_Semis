@@ -35,3 +35,4 @@ class drawRectangle extends OpenCvPipeline{
         return null;
     }
 }
+
