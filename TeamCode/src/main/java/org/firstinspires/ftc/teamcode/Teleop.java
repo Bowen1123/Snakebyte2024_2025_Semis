@@ -91,8 +91,8 @@ public class Teleop extends LinearOpMode {
             liftUpPower = Math.abs(gamepad2.right_stick_y);
             liftDownPower = Math.abs(gamepad2.left_stick_y);
 
-            // Lift
-            /*if (gamepad2.a && motor.getCurrentPosition() < 8350){
+
+            if (gamepad2.a && motor.getCurrentPosition() < 8350){
                 motor.setPower(1); // Up
             } else if (gamepad2.b && motor.getCurrentPosition() > 500){
                 motor.setPower(-1);
@@ -102,7 +102,8 @@ public class Teleop extends LinearOpMode {
                 motor.setPower(-liftDownPower);
             } else {
                 motor.setPower(0);
-            }*/
+            }
+
             motor.setPower(gamepad2.right_stick_y);
             if(gamepad2.dpad_right){
                 motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
