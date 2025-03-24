@@ -55,6 +55,7 @@ public class Testing extends LinearOpMode {
         waitForStart();
 
         Pose2d startPose = new Pose2d(0, 60, Math.toRadians(-90));
+
         Pose2d bucketPose = new Pose2d(5, 77, Math.toRadians(45));
 
         Pose2d endOfOne = new Pose2d(29.5, 52, Math.toRadians(65));
@@ -80,22 +81,22 @@ public class Testing extends LinearOpMode {
 
         TrajectoryActionBuilder bucket = drive.actionBuilder(startPose)
                 .setTangent(0)
-                .splineTo(new Vector2d(5, 77), Math.toRadians(-45));
+                .splineTo(new Vector2d(5, 77), Math.toRadians(45));
 
         TrajectoryActionBuilder goBackToBucketFromOne = drive.actionBuilder(endOfOne)
-                .setTangent(180)
+                //.setTangent(180)
                 .splineToLinearHeading(endAtBucket1, Math.toRadians(-45));
 
         TrajectoryActionBuilder goBackToBucketFromTwo = drive.actionBuilder(endOfTwo)
-                .setTangent(180)
+                //.setTangent(180)
                 .splineToLinearHeading(endAtBucket2, Math.toRadians(-45));
 
 
 
         TrajectoryActionBuilder one = drive.actionBuilder(bucketPose)
-                .setTangent(Math.toRadians(45))
-                .splineToLinearHeading(new Pose2d(20, 52, Math.toRadians(65)), Math.toRadians(65))
-                .splineToConstantHeading(new Vector2d(29.5, 52), Math.toRadians(65));
+                //.setTangent(Math.toRadians(45))
+                .splineToLinearHeading(new Pose2d(20, 62, Math.toRadians(0)), Math.toRadians(0))
+                .splineToConstantHeading(new Vector2d(29.5, 62), Math.toRadians(0));
                 //.strafeTo(new Vector2d(37.5, 52));
 
         TrajectoryActionBuilder two = drive.actionBuilder(endAtBucket1)
@@ -106,42 +107,22 @@ public class Testing extends LinearOpMode {
 
         while(opModeIsActive()){
             if (gamepad1.left_bumper){
-                Lift.slides.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                Intake.horizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                //Lift.slides.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                //Intake.horizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             }
 
 
             // FIRST ACTION
             if (gamepad1.a){
                 Actions.runBlocking(new SequentialAction(
-                        new ParallelAction(
-                                bucket.build(),
-                                lift.extend(),
-                                lift.bucketActivate()
-                        ),
-                        lift.bucketUp(),
-                        intake.wristVertical()
+                        bucket.build()
                 ));
             }
 
             // SECOND ACTION
             if (gamepad1.b){
                 Actions.runBlocking(new SequentialAction(
-                        new ParallelAction(
-                                one.build(),
-                                lift.retract()
-                        ),
-                        intake.wristDown(),
-                        new SleepAction(.7),
-                        lift.bucketDown(),
-                        new ParallelAction(
-                                intake.extend(),
-                                spinnerTime(6, intake)
-                        ),
-                        new SleepAction(.3),
-                        intake.retract(),
-                        new SleepAction(.5),
-                        intake.wristUp()
+                        one.build()
                 ));
             }
             /*if (gamepad1.b){
@@ -169,41 +150,21 @@ public class Testing extends LinearOpMode {
             }*/
             if(gamepad1.dpad_right){
                 Actions.runBlocking(new SequentialAction(
-                       intake.spinnerTime(4)
+                       intake.spinner(4)
                 ));
             }
 
             // THIRD ACTION
             if(gamepad1.y){
                 Actions.runBlocking(new SequentialAction(
-                        intake.wristVertical(),
-                        new ParallelAction(
-                                goBackToBucketFromOne.build(),
-                                lift.extend()
-                        ),
-                        lift.bucketUp()
+                        goBackToBucketFromOne.build()
                 ));
             }
 
             // FOuRTH ACTION
             if (gamepad1.x){
                 Actions.runBlocking(new SequentialAction(
-                        lift.bucketDown(),
-                        new ParallelAction(
-                                two.build(),
-                                lift.retract()
-                        ),
-                        intake.wristDown(),
-                        new ParallelAction(
-                                intake.extend(),
-                                spinnerTime(5.5, intake)
-                        ),
-                        new SleepAction(.3),
-                        intake.retract(),
-                        new SleepAction(.5),
-                        intake.wristUp(),
-                        new SleepAction(.7),
-                        intake.wristVertical()
+                        two.build()
                  ));
             }
 
@@ -220,16 +181,6 @@ public class Testing extends LinearOpMode {
 
 
 
-
-            if (gamepad2.x){
-                Actions.runBlocking(new SequentialAction(
-                        lift.semiExtend(),
-                        lift.bucketDown(),
-                        new SleepAction(1),
-                        intake.wristUp(),
-                        new SleepAction(1)
-                ));
-            }
 
             if (gamepad2.a) {
                 drive.localizer.update();

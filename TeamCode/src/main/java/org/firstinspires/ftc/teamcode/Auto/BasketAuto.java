@@ -19,9 +19,8 @@ import org.firstinspires.ftc.teamcode.Mechanism.Lift;
 public class BasketAuto extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        Pose2d testPose = new Pose2d(10, 55, Math.toRadians(0));
-        Pose2d initialPose = new Pose2d(0, 0, Math.toRadians(0));
-        MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
+        Pose2d testPose = new Pose2d(0, 0, Math.toRadians(0));
+        MecanumDrive drive = new MecanumDrive(hardwareMap, testPose);
         Intake intake = new Intake(hardwareMap);
         Lift lift = new Lift(hardwareMap);
         // TouchSensor sensor = hardwareMap.get(TouchSensor.class,"sensor");
@@ -39,12 +38,10 @@ public class BasketAuto extends LinearOpMode {
 
         TrajectoryActionBuilder start = drive.actionBuilder(testPose)
                 .setTangent(Math.toRadians(0))
-                .splineTo(new Vector2d(10, 42), Math.toRadians(-45));
+                .splineTo(new Vector2d(30, 0), Math.toRadians(0));
 
         while (opModeIsActive()){
             Actions.runBlocking(start.build());
-
-
 
         }
     }

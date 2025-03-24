@@ -184,10 +184,14 @@ public class Teleop extends LinearOpMode {
         Actions.runBlocking(new SequentialAction(
                 //intake.extend(),
                 intake.wristDown(),
-                lift.semiExtend(),
+               // lift.semiExtend(),
                 lift.bucketDown(),
                 lift.retract()
         ));
+    }
+    public String codeittycode()
+    {
+        return "please score 7 samples <333";
     }
     public void transfer(){
         Actions.runBlocking(new SequentialAction(
@@ -196,7 +200,7 @@ public class Teleop extends LinearOpMode {
                 intake.wristUp(),
                 (new SleepAction(1)),
                 intake.wristDown(),
-                lift.bucketSemi(),
+               // lift.bucketSemi(),
                 lift.extend()
         ));
     }
