@@ -125,11 +125,11 @@ public class FieldCentricTeleop extends LinearOpMode {
 
             if (gamepad2.dpad_right && horizontal.getCurrentPosition() < 1950){
                 horizontal.setPower(1); // Out
-            } else if (gamepad2.dpad_left && horizontal.getCurrentPosition() > 520){
+            } else if (gamepad2.dpad_left && horizontal.getCurrentPosition() > 300){
                 horizontal.setPower(-1); // In
             } else if (gamepad2.left_stick_x > 0.2 && leftLift.getCurrentPosition() < 1950){
                 horizontal.setPower(gamepad2.right_stick_x);
-            } else if (gamepad2.left_stick_x < -0.2 && leftLift.getCurrentPosition() > 520){
+            } else if (gamepad2.left_stick_x < -0.2 && leftLift.getCurrentPosition() > 300){
                 horizontal.setPower(gamepad2.right_stick_x);
             } else {
                 horizontal.setPower(0);
@@ -207,14 +207,12 @@ public class FieldCentricTeleop extends LinearOpMode {
 
         leftLift = hardwareMap.get(DcMotor.class, "rightLift");
         leftLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        leftLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         //leftLift.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
         rightLift = hardwareMap.get(DcMotor.class, "leftLift");
         rightLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         spinner = hardwareMap.get(CRServo.class, "spinner");

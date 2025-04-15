@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.Mechanism.Intake;
 import org.firstinspires.ftc.teamcode.Mechanism.Lift;
 
-@Autonomous(name = "PathingTest", group = "Autonomous")
+@Autonomous(name = "Comp_Auto", group = "Autonomous")
 public class Competition_Autonomous extends LinearOpMode {
 
     @Override
@@ -22,13 +22,15 @@ public class Competition_Autonomous extends LinearOpMode {
 
         Lift lift = new Lift(hardwareMap);
         Intake intake = new Intake(hardwareMap);
+        lift.resetEncoder();
+        intake.resetEncoder();
 
         Pose2d startPose = new Pose2d(0, 60, Math.toRadians(-90));
         MecanumDrive drive = new MecanumDrive(hardwareMap, startPose);
 
         Pose2d bucketPose = new Pose2d(7, 78, Math.toRadians(-45));
 
-        Pose2d one = new Pose2d(20.5, 71, 0);
+        Pose2d one = new Pose2d(21.5, 71, 0);
 
         Pose2d two = new Pose2d(21, 81.75, 0);
 
@@ -40,7 +42,7 @@ public class Competition_Autonomous extends LinearOpMode {
         TrajectoryActionBuilder toOne = drive.actionBuilder(bucketPose)
                 .setTangent(Math.toRadians(-45))
 //                .splineToLinearHeading(new Pose2d(15, 69, Math.toRadians(0)), Math.toRadians(0))
-                .splineTo(new Vector2d(20.5, 71), Math.toRadians(0));
+                .splineTo(new Vector2d(21.5, 71), Math.toRadians(0));
 
         TrajectoryActionBuilder backToBucketFromOne = drive.actionBuilder(one)
                 .setTangent(-135)
@@ -110,7 +112,7 @@ public class Competition_Autonomous extends LinearOpMode {
                     ),
                     lift.bucketUp(),
                     intake.wristDown(),
-                    new SleepAction(.4),
+                    new SleepAction(.8),
                     lift.bucketDown(),
                     new ParallelAction(
                             lift.retract(),
@@ -120,7 +122,7 @@ public class Competition_Autonomous extends LinearOpMode {
                     // Intake First Sample
                     intake.activateSpinner(),
                     intake.extend(),
-                    new SleepAction(2),
+                    new SleepAction(1.7),
                     intake.deactivateSpinner(),
                     intake.retract(),
                     intake.wristUp(),
@@ -140,7 +142,7 @@ public class Competition_Autonomous extends LinearOpMode {
                     intake.wristDown(),
                     intake.activateSpinner(),
                     intake.extend(),
-                    new SleepAction(2),
+                    new SleepAction(1.7),
                     intake.retract(),
                     intake.deactivateSpinner(),
                     new SleepAction(.5),

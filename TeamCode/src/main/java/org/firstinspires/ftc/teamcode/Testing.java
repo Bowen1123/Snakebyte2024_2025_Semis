@@ -106,98 +106,25 @@ public class Testing extends LinearOpMode {
         drive.localizer.setPose(bucketPose);
 
         while(opModeIsActive()){
-            if (gamepad1.left_bumper){
-                //Lift.slides.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                //Intake.horizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            }
 
 
             // FIRST ACTION
             if (gamepad1.a){
-                Actions.runBlocking(new SequentialAction(
-                        bucket.build()
-                ));
+                lift.goToPos(400);
+
             }
 
             // SECOND ACTION
             if (gamepad1.b){
                 Actions.runBlocking(new SequentialAction(
-                        one.build()
+                        lift.extend()
                 ));
             }
             /*if (gamepad1.b){
-                Actions.runBlocking(new SequentialAction(
-                        lift.bucketDown(),
-                        new ParallelAction(
-                                intake.wristVertical(),
-                                one.build(),
-                                lift.retract()
-                                //intake.spinnerTime(3)
-                        ),*/
-    /*                    intake.wristDown(),
-                        new SleepAction(.3),
-                        new ParallelAction(
-                                intake.spinnerTime(5),
-                                intake.extend()
-                        ),
-                        new SleepAction(.3),
-                        intake.retract(),
-                        new SleepAction(.5),
-                        intake.wristUp(),
-                        new SleepAction(.7),
-                        intake.wristVertical()
-                ));
             }*/
-            if(gamepad1.dpad_right){
-                Actions.runBlocking(new SequentialAction(
-                       intake.spinner(4)
-                ));
-            }
-
-            // THIRD ACTION
-            if(gamepad1.y){
-                Actions.runBlocking(new SequentialAction(
-                        goBackToBucketFromOne.build()
-                ));
-            }
-
-            // FOuRTH ACTION
-            if (gamepad1.x){
-                Actions.runBlocking(new SequentialAction(
-                        two.build()
-                 ));
-            }
-
-            // FIFTH ACTION
-            if (gamepad1.right_bumper){
-                Actions.runBlocking(new SequentialAction(
-                        new ParallelAction(
-                                goBackToBucketFromTwo.build(),
-                                lift.extend()
-                        ),
-                        lift.bucketUp()
-                ));
-            }
 
 
 
-
-            if (gamepad2.a) {
-                drive.localizer.update();
-                TrajectoryActionBuilder bucketTest = drive.actionBuilder(drive.localizer.getPose())
-                        .setTangent(0)
-                        .splineTo(new Vector2d(5, 77), Math.toRadians(45));
-                Actions.runBlocking(new SequentialAction(
-                        bucketTest.build()
-                ));
-
-            }
-            if(gamepad1.dpad_down){
-                telemetry.addData("Test", true);
-            }
-            if (gamepad1.dpad_right){
-                telemetry.addData("Test", false);
-            }
 
 
 
@@ -218,12 +145,16 @@ public class Testing extends LinearOpMode {
             telemetry.addData("Yaw: ", imu.getRobotYawPitchRollAngles().getYaw());
 
             telemetry.addData("Horizontal: ", intake.getPos());
-            telemetry.addData("Lift: ", lift.getPos());
-            telemetry.addData("Timer: ", intake.getTimer());
-            telemetry.addData("Pose", drive.localizer.getPose());
-            Pose2d currentPose = drive.localizer.getPose();
-            //telemetry.addData("X", currentPose);
-            drive.localizer.update();
+            telemetry.addData("Right: ", lift.getRightLiftPos());
+            telemetry.addData("Left: ", lift.getLeftLiftPos());
+
+
+
+//            telemetry.addData("Timer: ", intake.getTimer());
+//            telemetry.addData("Pose", drive.localizer.getPose());
+//            Pose2d currentPose = drive.localizer.getPose();
+//            //telemetry.addData("X", currentPose);
+//            drive.localizer.update();
             telemetry.update();
 
 

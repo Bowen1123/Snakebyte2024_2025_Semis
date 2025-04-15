@@ -20,14 +20,14 @@ public class Lift {
     private String status = "";
     private String bucketStatus = "";
     public Lift(){
-        rightLift = hardwareMap.get(DcMotor.class, "leftLift");
+        rightLift = hardwareMap.get(DcMotor.class, "rightLift");
         rightLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         //rightLift.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
-        leftLift = hardwareMap.get(DcMotor.class, "rightLift");
+        leftLift = hardwareMap.get(DcMotor.class, "leftLift");
         leftLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -38,17 +38,17 @@ public class Lift {
     public Lift(HardwareMap hardwareMap){
         rightLift = hardwareMap.get(DcMotor.class, "rightLift");
         rightLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        rightLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        rightLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         // reverse
 
 
         leftLift = hardwareMap.get(DcMotor.class, "leftLift");
         leftLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        leftLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        leftLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        leftLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        leftLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-
+        leftLift.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
 
@@ -56,6 +56,14 @@ public class Lift {
 
         init = true;
         slideExtended = false;
+    }
+
+    public void resetEncoder(){
+        rightLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        leftLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
 
@@ -66,7 +74,9 @@ public class Lift {
     }
 
     public double getBucketPos(){ return bucket.getPosition(); }
-    public double getLiftPos(){ return rightLift.getCurrentPosition(); }
+    public double getRightLiftPos(){ return rightLift.getCurrentPosition(); }
+    public double getLeftLiftPos(){ return leftLift.getCurrentPosition(); }
+
     public String getStatus(){
         return status;
     }
@@ -80,21 +90,37 @@ public class Lift {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             double pos = Math.abs(rightLift.getCurrentPosition());
-            if (pos < targetPosition - 5) {
+            if (pos < targetPosition - 8) {
                 rightLift.setTargetPosition(targetPosition);
                 leftLift.setTargetPosition(targetPosition);
                 rightLift.setPower(.8);
                 leftLift.setPower(.8);
                 pos = Math.abs(rightLift.getCurrentPosition());
                 return true;
-            } else if (pos > targetPosition + 5){
+            } else if (pos > targetPosition + 8){
                 rightLift.setTargetPosition(targetPosition);
                 leftLift.setTargetPosition(targetPosition);
-                rightLift.setPower(-.8);
-                leftLift.setPower(-.8);
+                rightLift.setPower(-.5);
+                leftLift.setPower(-.5);
                 pos = Math.abs(rightLift.getCurrentPosition());
                 return true;
             } else {
+                if (pos < targetPosition - 8) {
+                    rightLift.setTargetPosition(targetPosition);
+                    leftLift.setTargetPosition(targetPosition);
+                    rightLift.setPower(.8);
+                    leftLift.setPower(.8);
+                    pos = Math.abs(rightLift.getCurrentPosition());
+                    return true;
+                } else if (pos > targetPosition + 8){
+                    rightLift.setTargetPosition(targetPosition);
+                    leftLift.setTargetPosition(targetPosition);
+                    rightLift.setPower(-.5);
+                    leftLift.setPower(-.5);
+                    pos = Math.abs(rightLift.getCurrentPosition());
+                    return true;
+                }
+
                     rightLift.setPower(0);
                     leftLift.setPower(0);
                     return false;
@@ -110,9 +136,9 @@ public class Lift {
             status = "Extended";
 
             double pos = Math.abs(rightLift.getCurrentPosition());
-            if (pos < 2925) { //8450
-                rightLift.setTargetPosition(2925);
-                leftLift.setTargetPosition(2925);
+            if (pos < 2800) { //2900
+                rightLift.setTargetPosition(2800);
+                leftLift.setTargetPosition(2800);
                 rightLift.setPower(1);
                 leftLift.setPower(1);
                 pos = Math.abs(rightLift.getCurrentPosition());
@@ -135,9 +161,9 @@ public class Lift {
 
             double pos = Math.abs(rightLift.getCurrentPosition());
 
-            if (pos > 520) { //8450
-                rightLift.setTargetPosition(520);
-                leftLift.setTargetPosition(520);
+            if (pos > 200) { //8450
+                rightLift.setTargetPosition(200);
+                leftLift.setTargetPosition(200);
                 rightLift.setPower(-.9);
                 leftLift.setPower(-.9);
                 pos = Math.abs(rightLift.getCurrentPosition());
@@ -157,7 +183,7 @@ public class Lift {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            double targetPos = .69;
+            double targetPos = .62;
             bucketStatus = "Down";
 
 
@@ -172,7 +198,7 @@ public class Lift {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            double targetPos = .68;
+            double targetPos = .615;
             bucketStatus = "Start";
 
             bucket.setPosition(targetPos);
@@ -186,7 +212,7 @@ public class Lift {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            double targetPos = .15;
+            double targetPos = .13;
             bucketStatus = "Up";
 
 

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Mechanism;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
 import androidx.annotation.NonNull;
 
@@ -30,29 +31,24 @@ public class Intake{
     private String status = "";
     private String wristStatus = "";
     public Intake (){
-        horizontal = hardwareMap.get(DcMotor.class, "horizontal");
-        horizontal.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        horizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        horizontal.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        spinner = hardwareMap.get(CRServo.class, "spinner");
-        spinner.setDirection(DcMotorSimple.Direction.REVERSE);
-        wrist = hardwareMap.get(Servo.class, "wrist");
-
-        touchSensor = hardwareMap.get(TouchSensor.class, "sensor");
     }
 
     public Intake(HardwareMap hardwareMap){
         horizontal = hardwareMap.get(DcMotor.class, "horizontal");
         horizontal.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        horizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         horizontal.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
 
         spinner = hardwareMap.get(CRServo.class, "spinner");
         wrist = hardwareMap.get(Servo.class, "wrist");
 
         timer = new ElapsedTime();
 
+    }
+
+    public void resetEncoder(){
+        horizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        horizontal.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     /*public Action retract(){
@@ -110,12 +106,13 @@ public class Intake{
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             double pos = Math.abs(horizontal.getCurrentPosition());
-            if (pos < targetPosition - 10) {
+            if (pos < targetPosition - 8) {
                 horizontal.setTargetPosition(targetPosition);
                 horizontal.setPower(.8);
                 pos = Math.abs(horizontal.getCurrentPosition());
+
                 return true;
-            } else if (pos > targetPosition + 10){
+            } else if (pos > targetPosition + 8){
                 horizontal.setTargetPosition(targetPosition);
                 horizontal.setPower(-.8);
                 pos = Math.abs(horizontal.getCurrentPosition());
@@ -155,7 +152,7 @@ public class Intake{
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            double targetPos = .73;
+            double targetPos = .7;
             wristStatus = "Up";
 
             wrist.setPosition(targetPos);
@@ -179,7 +176,7 @@ public class Intake{
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            double targetPos = 0.12;
+            double targetPos = 0.197;
             wristStatus = "Down";
 
             wrist.setPosition(targetPos);
@@ -232,8 +229,8 @@ public class Intake{
             status = "Retracted";
 
             double pos = Math.abs(horizontal.getCurrentPosition());
-            if (pos > 400) {
-                horizontal.setTargetPosition(400);
+            if (pos > 300) {
+                horizontal.setTargetPosition(300);
                 horizontal.setPower(-.9);
                 pos = Math.abs(horizontal.getCurrentPosition());
                 return true;
