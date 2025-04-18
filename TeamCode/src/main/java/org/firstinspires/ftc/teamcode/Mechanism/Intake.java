@@ -176,7 +176,7 @@ public class Intake{
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            double targetPos = 0.197;
+            double targetPos = 0.185;
             wristStatus = "Down";
 
             wrist.setPosition(targetPos);

@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Mechanism;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.teamcode.MecanumDrive;
 
 public class Lift {
     public  DcMotor rightLift, leftLift;
@@ -40,7 +43,6 @@ public class Lift {
         rightLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 //        rightLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 //        rightLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        // reverse
 
 
         leftLift = hardwareMap.get(DcMotor.class, "leftLift");
@@ -89,22 +91,51 @@ public class Lift {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+
             double pos = Math.abs(rightLift.getCurrentPosition());
-            if (pos < targetPosition - 8) {
+            double strafe = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
+            double linear = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
+            double  turn = gamepad1.right_stick_x;
+            double denominator = Math.max(Math.abs(strafe) + Math.abs(linear) + Math.abs(turn), 1);
+
+            double frontLeftPower = (strafe + linear + turn) / denominator;
+            double backLeftPower = (strafe - linear + turn) / denominator;
+            double frontRightPower = (strafe - linear - turn) / denominator;
+            double backRightPower = (strafe + linear - turn) / denominator;
+
+            leftFront.setPower(frontLeftPower / 1.15);
+            leftBack.setPower(backLeftPower / 1.15);
+            rightFront.setPower(frontRightPower / 1.15);
+            rightBack.setPower(backRightPower / 1.15);
+            if (pos < targetPosition - 20) {
                 rightLift.setTargetPosition(targetPosition);
                 leftLift.setTargetPosition(targetPosition);
                 rightLift.setPower(.8);
                 leftLift.setPower(.8);
                 pos = Math.abs(rightLift.getCurrentPosition());
                 return true;
-            } else if (pos > targetPosition + 8){
+            } else if (pos < targetPosition - 5) {
+                rightLift.setTargetPosition(targetPosition);
+                leftLift.setTargetPosition(targetPosition);
+                rightLift.setPower(.4);
+                leftLift.setPower(.4);
+                pos = Math.abs(rightLift.getCurrentPosition());
+                return true;
+            } else if (pos > targetPosition + 20){
                 rightLift.setTargetPosition(targetPosition);
                 leftLift.setTargetPosition(targetPosition);
                 rightLift.setPower(-.5);
                 leftLift.setPower(-.5);
                 pos = Math.abs(rightLift.getCurrentPosition());
                 return true;
-            } else {
+            } else if (pos > targetPosition + 5){
+                rightLift.setTargetPosition(targetPosition);
+                leftLift.setTargetPosition(targetPosition);
+                rightLift.setPower(-.25);
+                leftLift.setPower(-.25);
+                pos = Math.abs(rightLift.getCurrentPosition());
+                return true;
+            } {
                 if (pos < targetPosition - 8) {
                     rightLift.setTargetPosition(targetPosition);
                     leftLift.setTargetPosition(targetPosition);

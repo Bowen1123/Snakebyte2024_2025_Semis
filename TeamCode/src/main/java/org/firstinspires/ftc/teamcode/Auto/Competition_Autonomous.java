@@ -34,13 +34,15 @@ public class Competition_Autonomous extends LinearOpMode {
 
         Pose2d two = new Pose2d(21, 81.75, 0);
 
+        Pose2d three = new Pose2d(21, 82, Math.toRadians(45));
+
 
         TrajectoryActionBuilder bucket = drive.actionBuilder(startPose)
                 .setTangent(0)
                 .splineTo(new Vector2d(7, 78), Math.toRadians(45));
 
         TrajectoryActionBuilder toOne = drive.actionBuilder(bucketPose)
-                .setTangent(Math.toRadians(-45))
+                .setTangent(Math.toRadians(-46))
 //                .splineToLinearHeading(new Pose2d(15, 69, Math.toRadians(0)), Math.toRadians(0))
                 .splineTo(new Vector2d(21.5, 71), Math.toRadians(0));
 
@@ -59,6 +61,14 @@ public class Competition_Autonomous extends LinearOpMode {
                 .setTangent(Math.toRadians(-180))
 //                .splineToLinearHeading(new Pose2d(15, 74, Math.toRadians(0)), Math.toRadians(-180))
                 .splineTo(new Vector2d(7, 77), Math.toRadians(135));
+
+        TrajectoryActionBuilder toThree = drive.actionBuilder(bucketPose)
+                .setTangent(0)
+                .splineTo(new Vector2d(24, 82), Math.toRadians(50));//65
+
+        TrajectoryActionBuilder backToBucketFromThree = drive.actionBuilder(three)
+                .setTangent(-135)
+                .splineTo(new Vector2d(7, 78), Math.toRadians(105));//115
 
         /*SequentialAction pathing = new SequentialAction(
                 bucket.build(),
@@ -107,12 +117,13 @@ public class Competition_Autonomous extends LinearOpMode {
             Actions.runBlocking(new SequentialAction(
                     new ParallelAction(
                             lift.bucketStart(),
-                            lift.extend(),
+                            lift.extend()
+                            ,
                             bucket.build()
                     ),
                     lift.bucketUp(),
                     intake.wristDown(),
-                    new SleepAction(.8),
+                    new SleepAction(0.6),
                     lift.bucketDown(),
                     new ParallelAction(
                             lift.retract(),
@@ -121,10 +132,10 @@ public class Competition_Autonomous extends LinearOpMode {
 
                     // Intake First Sample
                     intake.activateSpinner(),
-                    intake.extend(),
-                    new SleepAction(1.7),
+                    intake.goToPos(1950),
+                    new SleepAction(1.4),
                     intake.deactivateSpinner(),
-                    intake.retract(),
+                    intake.goToPos(180),
                     intake.wristUp(),
                     new SleepAction(1.5),
                     intake.wristSemi(),
@@ -142,7 +153,7 @@ public class Competition_Autonomous extends LinearOpMode {
                     intake.wristDown(),
                     intake.activateSpinner(),
                     intake.extend(),
-                    new SleepAction(1.7),
+                    new SleepAction(1.4),
                     intake.retract(),
                     intake.deactivateSpinner(),
                     new SleepAction(.5),
@@ -153,7 +164,34 @@ public class Competition_Autonomous extends LinearOpMode {
                             lift.extend(),
                             backToBucketFromTwo.build()
                     ),
-                    lift.bucketUp()));
+                    lift.bucketUp(),
+                    new SleepAction(.6),
+                    lift.bucketDown(),
+
+
+                    // To Three
+                    new ParallelAction(
+                            lift.retract(),
+                            toThree.build()
+                    ),
+                    intake.wristDown(),
+                    intake.activateSpinner(),
+                    intake.extend(),
+                    new SleepAction(1.4),
+                    intake.retract(),
+                    intake.deactivateSpinner(),
+                    new SleepAction(.5),
+                    intake.wristUp(),
+                    new SleepAction(1.6),
+                    intake.wristSemi(),
+                    new ParallelAction(
+                            lift.extend(),
+                            backToBucketFromThree.build()
+                    ),
+                    lift.bucketUp(),
+                    new SleepAction(.6),
+                    lift.bucketDown()
+                    ));
 
             Actions.runBlocking(new SleepAction(1000));
         }

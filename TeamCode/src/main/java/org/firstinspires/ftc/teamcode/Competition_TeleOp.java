@@ -27,7 +27,7 @@ public class Competition_TeleOp extends LinearOpMode {
     private Lift lift;
     private Intake intake;
     private CRServo spinner;
-    private DcMotor leftFront, leftBack, rightFront, rightBack, leftLift, rightLift, horizontal;
+    private static DcMotor leftFront, leftBack, rightFront, rightBack, horizontal;
     private double horizontalPower, liftUpPower, liftDownPower;
     private int horizontal_target_position;
     private  MecanumDrive drives;
@@ -72,20 +72,20 @@ public class Competition_TeleOp extends LinearOpMode {
                 horizontal_target_position = horizontal.getCurrentPosition();
             }
 
-            if (gamepad1.a) {
+            if (gamepad1.a) { // Transfer
                 Actions.runBlocking(new SequentialAction(
                         lift.bucketDown(),
-                        lift.goToPos(180),
-                        intake.goToPos(200),
+                        lift.goToPos(160),
+                        intake.goToPos(180),
                         new SleepAction(.5),
                         intake.wristUp(),
                         new SleepAction(1.7),
                         intake.wristDown()
                 ));
             }
-            if (gamepad1.b) {
+            if (gamepad1.b) { // Score High Basket
                 Actions.runBlocking(new SequentialAction(
-                        lift.goToPos(2800),
+                        lift.goToPos(2850),
                         lift.bucketUp()));
 
                 Actions.runBlocking(new SequentialAction(
@@ -95,29 +95,31 @@ public class Competition_TeleOp extends LinearOpMode {
                 Actions.runBlocking(new SequentialAction(
                         lift.bucketDown(),
                         lift.goToPos(180)));
+
+
             }
 
             if (gamepad1.y) {
-                Actions.runBlocking(new SequentialAction(intake.wristUp()));
+                Actions.runBlocking(intake.wristUp());
             }
             if (gamepad1.x) {
-                Actions.runBlocking((new SequentialAction(intake.wristDown())));
+                Actions.runBlocking(intake.wristDown());
             }
 
-            if (gamepad1.dpad_up) {
-                Actions.runBlocking(lift.goToPos(1000));
-            }
-            if (gamepad1.dpad_down) {
-                Actions.runBlocking(lift.goToPos(100));
-            }
-            if (gamepad1.dpad_right) {
-                horizontal_target_position -= 2;
-                Actions.runBlocking(intake.goToPos(horizontal_target_position));
-            }
-            if (gamepad1.dpad_left){
-                horizontal_target_position += 2;
-                Actions.runBlocking(intake.goToPos(horizontal_target_position));
-            }
+//            if (gamepad1.dpad_up) {
+//                Actions.runBlocking(lift.goToPos(2800));
+//            }
+//            if (gamepad1.dpad_down) {
+//                Actions.runBlocking(lift.goToPos(100));
+//            }
+//            if (gamepad1.dpad_right) {
+//                horizontal_target_position -= 2;
+//                Actions.runBlocking(intake.goToPos(horizontal_target_position));
+//            }
+//            if (gamepad1.dpad_left){
+//                horizontal_target_position += 2;
+//                Actions.runBlocking(intake.goToPos(horizontal_target_position));
+//            }
 
 
 
@@ -143,33 +145,30 @@ public class Competition_TeleOp extends LinearOpMode {
 
 
 
-            if (gamepad2.dpad_right && horizontal.getCurrentPosition() < 1950){
+            if (gamepad2.dpad_right && horizontal.getCurrentPosition() < 1920){
                 horizontal.setPower(1); // Out
-            } else if (gamepad2.dpad_left && horizontal.getCurrentPosition() > 520){
+            } else if (gamepad2.dpad_left && horizontal.getCurrentPosition() > 150){
                 horizontal.setPower(-1); // In
-            } else if (gamepad2.right_stick_x > 0.2 && leftLift.getCurrentPosition() < 1950){
-                horizontal.setPower(gamepad2.right_stick_x);
-            } else if (gamepad2.right_stick_x < -0.2 && leftLift.getCurrentPosition() > 520){
-                horizontal.setPower(gamepad2.right_stick_x);
+            } else if (gamepad2.left_stick_x > 0.2 && horizontal.getCurrentPosition() < 1920){
+                horizontal.setPower(gamepad2.left_stick_x);
+            } else if (gamepad2.left_stick_x < -0.2 && horizontal.getCurrentPosition() > 150){
+                horizontal.setPower(-gamepad2.left_stick_x);
             } else {
                 horizontal.setPower(0);
             }
-            horizontal.setPower(gamepad2.right_stick_y);
-
 
 
             if (gamepad2.a){
-                Actions.runBlocking(new SequentialAction(lift.goToPos(400)));
+                Actions.runBlocking(new ParallelAction(lift.goToPos(160)));
             }
-            if(gamepad2.b){
-                Actions.runBlocking(new SequentialAction(toSub.build()));
-            }
-
-            if (gamepad2.y){
-                Actions.runBlocking(new SequentialAction(toBucket.build()));
+            if(gamepad2.y){
+                Actions.runBlocking(lift.bucketUp());
             }
             if (gamepad2.x){
-                Actions.runBlocking((new SequentialAction(lift.goToPos(2925))));
+                Actions.runBlocking(lift.bucketDown());
+            }
+            if (gamepad2.b){
+                Actions.runBlocking(new ParallelAction(lift.goToPos(2850)));
             }
 
 
