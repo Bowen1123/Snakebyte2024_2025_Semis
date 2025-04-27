@@ -20,7 +20,7 @@ import com.qualcomm.robotcore.hardware.IMU;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.Mechanism.Intake;
 import org.firstinspires.ftc.teamcode.Mechanism.Lift;
-@TeleOp
+
 public class Comp_TeleTest extends LinearOpMode {
 
     private IMU imu;

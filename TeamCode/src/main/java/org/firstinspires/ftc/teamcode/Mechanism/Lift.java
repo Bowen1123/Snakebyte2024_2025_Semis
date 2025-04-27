@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Mechanism;
 
+
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 
@@ -13,6 +14,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.Competition_TeleOp;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
 public class Lift {
@@ -53,7 +55,6 @@ public class Lift {
         leftLift.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
-
         bucket = hardwareMap.get(Servo.class, "bucket");
 
         init = true;
@@ -69,6 +70,10 @@ public class Lift {
     }
 
 
+    public void setPower(double power){
+        leftLift.setPower(power);
+        rightLift.setPower(power);
+    }
     public Action goToPos(int targetPosition){
         this.targetPosition = targetPosition;
 
@@ -93,20 +98,18 @@ public class Lift {
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
 
             double pos = Math.abs(rightLift.getCurrentPosition());
-            double strafe = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
-            double linear = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
-            double  turn = gamepad1.right_stick_x;
-            double denominator = Math.max(Math.abs(strafe) + Math.abs(linear) + Math.abs(turn), 1);
+//
+//            double strafe = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
+//            double linear = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
+//            double  turn = gamepad1.right_stick_x;
+//            double denominator = Math.max(Math.abs(strafe) + Math.abs(linear) + Math.abs(turn), 1);
+//
+//            Competition_TeleOp.setDrivePower(
+//                    (strafe + linear + turn) / denominator,
+//                    (strafe - linear + turn) / denominator,
+//                    (strafe - linear - turn) / denominator,
+//                    (strafe + linear - turn) / denominator);
 
-            double frontLeftPower = (strafe + linear + turn) / denominator;
-            double backLeftPower = (strafe - linear + turn) / denominator;
-            double frontRightPower = (strafe - linear - turn) / denominator;
-            double backRightPower = (strafe + linear - turn) / denominator;
-
-            leftFront.setPower(frontLeftPower / 1.15);
-            leftBack.setPower(backLeftPower / 1.15);
-            rightFront.setPower(frontRightPower / 1.15);
-            rightBack.setPower(backRightPower / 1.15);
             if (pos < targetPosition - 20) {
                 rightLift.setTargetPosition(targetPosition);
                 leftLift.setTargetPosition(targetPosition);
@@ -136,22 +139,6 @@ public class Lift {
                 pos = Math.abs(rightLift.getCurrentPosition());
                 return true;
             } {
-                if (pos < targetPosition - 8) {
-                    rightLift.setTargetPosition(targetPosition);
-                    leftLift.setTargetPosition(targetPosition);
-                    rightLift.setPower(.8);
-                    leftLift.setPower(.8);
-                    pos = Math.abs(rightLift.getCurrentPosition());
-                    return true;
-                } else if (pos > targetPosition + 8){
-                    rightLift.setTargetPosition(targetPosition);
-                    leftLift.setTargetPosition(targetPosition);
-                    rightLift.setPower(-.5);
-                    leftLift.setPower(-.5);
-                    pos = Math.abs(rightLift.getCurrentPosition());
-                    return true;
-                }
-
                     rightLift.setPower(0);
                     leftLift.setPower(0);
                     return false;
@@ -167,9 +154,9 @@ public class Lift {
             status = "Extended";
 
             double pos = Math.abs(rightLift.getCurrentPosition());
-            if (pos < 2800) { //2900
-                rightLift.setTargetPosition(2800);
-                leftLift.setTargetPosition(2800);
+            if (pos < 2850) { //2900
+                rightLift.setTargetPosition(2850);
+                leftLift.setTargetPosition(2850);
                 rightLift.setPower(1);
                 leftLift.setPower(1);
                 pos = Math.abs(rightLift.getCurrentPosition());
